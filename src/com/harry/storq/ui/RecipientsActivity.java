@@ -36,6 +36,9 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
+//This will be edited to send an email...
+
+
 public class RecipientsActivity extends Activity {
 
 	public static final String TAG = RecipientsActivity.class.getSimpleName();
@@ -234,9 +237,6 @@ public class RecipientsActivity extends Activity {
 	}
 	
 	return message;
-	
-	
-		
 	}
 		
 		

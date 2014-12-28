@@ -22,9 +22,15 @@ import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.facebook.FacebookRequestError;
@@ -57,6 +63,12 @@ public class MainActivity extends FragmentActivity implements
 	public static final int FILE_SIZE_LIMIT = 1024*1024*10; // 10 MB
 	
 	protected Uri mMediaUri;
+	
+	//Add gesture activity
+  	protected GestureDetector gestureDetector;
+  	protected Intent passingIntent;
+  	protected EditText storqText;
+  	protected String message = "";
 	
 	protected DialogInterface.OnClickListener mDialogListener = 
 			new DialogInterface.OnClickListener() {
@@ -185,9 +197,30 @@ public class MainActivity extends FragmentActivity implements
 		else {
 			Log.i(TAG, currentUser.getUsername());
 		}
+	    
 		
-//This is for restoring the tab for future request... (in case they want friends)
-/*
+		//Gesture Activity
+		gestureDetector = new GestureDetector(
+                new SwipeGestureDetector());		
+		
+		passingIntent= new Intent(MainActivity.this, RecipientsActivity.class);
+	    storqText = (EditText) findViewById(R.id.editText);
+	    message = storqText.getText().toString();
+		//Binding the text edit and button to the appropriate android object
+		Button button = (Button) findViewById(R.id.getTextButton);
+		button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+        	    passingIntent.putExtra("storqm", message);
+        	    passingIntent.putExtra("storqt", true);
+        	    startActivity(passingIntent);
+            }
+        });
+		
+		
+		//This is for restoring the tab for future request... (in case they want friends)
+		
+		/*
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -222,7 +255,7 @@ public class MainActivity extends FragmentActivity implements
 					.setIcon(mSectionsPagerAdapter.getIcon(i))
 					.setTabListener(this));
 		}
-*/
+		*/
 	}
 	
 	@Override
@@ -407,5 +440,91 @@ public class MainActivity extends FragmentActivity implements
 		    request.executeAsync();
 		  }
 	
+	 
+	 //Add gesture to the Main Activity...
+
+	  @Override
+	  public boolean onTouchEvent(MotionEvent event) {
+	    if (gestureDetector.onTouchEvent(event)) {
+	      return true;
+	    }
+	    return super.onTouchEvent(event);
+	  }
+
+	  private void onLeftSwipe() {
+	  }
+
+	  private void onRightSwipe() {
+  	    passingIntent.putExtra("storqm", message);
+  	    passingIntent.putExtra("storqt", true);
+  	    startActivity(passingIntent);
+	  }
+	  
+	  private void onUpSwipe() {
+	
+	  }
+	  
+
+	  
+	  
+	  private void onDownSwipe() {
+		  
+	  }
+	  
+
+	  // Private class for gestures
+	  private class SwipeGestureDetector
+	          extends SimpleOnGestureListener {
+	    // Swipe properties, you can change it to make the swipe
+	    // longer or shorter and speed
+	    private static final int SWIPE_MIN_DISTANCE = 120;
+	    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+
+	    @Override
+	    public boolean onFling(MotionEvent e1, MotionEvent e2,
+	                         float velocityX, float velocityY) {
+	      try {
+	        float diff = e1.getX() - e2.getX();
+	        float diffY = e1.getY() - e2.getY();
+	        
+	        
+	        // Left swipe
+	        if (diff > SWIPE_MIN_DISTANCE
+	        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+	           MainActivity.this.onLeftSwipe();
+
+	        // Right swipe
+	        //only the right Swipe will pass the message... 
+	        //The other is not...
+	        } else if (-diff > SWIPE_MIN_DISTANCE
+	        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+	        	MainActivity.this.onRightSwipe();
+	        
+	        // Up swipe 
+	        }// else if
+	        
+	        if (diffY > SWIPE_MIN_DISTANCE
+	        && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+	        	MainActivity.this.onUpSwipe();
+
+	        // Right swipe
+	        } else if (-diffY > SWIPE_MIN_DISTANCE
+	        && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
+	        	MainActivity.this.onDownSwipe();
+	        }
+	        
+	        
+	      } catch (Exception e) {
+	        Log.e("Gesture Activity", "Error on gestures");
+	      }
+	      return false;
+	    }
+	  }
+	
+
+	  //SENDING THE MESSAGE RANDDOMLY
+	  
+	  
+	 
 	
 }
