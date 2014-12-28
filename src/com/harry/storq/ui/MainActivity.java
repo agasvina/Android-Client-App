@@ -70,6 +70,7 @@ public class MainActivity extends FragmentActivity implements
 				case 1: 
 					//testing gesture
 					//send activity to the gesture Activity
+					Toast.makeText(MainActivity.this, ParseUser.getCurrentUser().getString("gender"), Toast.LENGTH_LONG).show();
 					Intent intentGest = new Intent(MainActivity.this,GestureActivity.class);
 					startActivity(intentGest);
 					break;
@@ -184,7 +185,9 @@ public class MainActivity extends FragmentActivity implements
 		else {
 			Log.i(TAG, currentUser.getUsername());
 		}
-
+		
+//This is for restoring the tab for future request... (in case they want friends)
+/*
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -219,6 +222,7 @@ public class MainActivity extends FragmentActivity implements
 					.setIcon(mSectionsPagerAdapter.getIcon(i))
 					.setTabListener(this));
 		}
+*/
 	}
 	
 	@Override
@@ -367,10 +371,7 @@ public class MainActivity extends FragmentActivity implements
 		              userProfile.put("name", user.getName());
 		              if (user.getProperty("gender") != null) {
 		                userProfile.put("gender", user.getProperty("gender"));
-			            currentUser.put("gender", user.getProperty("gender"));
-		              } else {
-		            	  currentUser.put("gender", "NA");
-		              }
+		              } 
 		              if (user.getProperty("email") != null) {
 		                userProfile.put("email", user.getProperty("email"));
 			            currentUser.put("email", user.getProperty("email"));
