@@ -1,0 +1,61 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    tools:context="com.harry.storq.ui.Gesture2Activity" >
+
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="110dp"
+        android:text="Large Text"
+    	android:paddingLeft="@dimen/activity_horizontal_margin_larger"
+    	android:paddingRight="@dimen/activity_horizontal_margin_larger"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView2"
+        android:layout_centerHorizontal="true"
+        android:text="Small Text 03"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView1"
+        android:layout_centerHorizontal="true"
+        android:text="Small Text 02"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_marginTop="60dp"
+        android:text="Small Text 01"
+                android:layout_centerHorizontal="true"
+        
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+    
+     <TextView
+         android:id="@+id/textView4"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/textView3"
+         android:layout_centerHorizontal="true"
+         android:text="Medium Text"
+             	android:paddingLeft="@dimen/activity_horizontal_margin"
+         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+</RelativeLayout>

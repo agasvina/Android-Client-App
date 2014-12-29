@@ -138,8 +138,12 @@
             android:label="@string/title_activity_send_storq" >
         </activity>
         <activity
-            android:name="com.harry.storq.ui.Gesture2Activity"
+            android:name=".ui.Gesture2Activity"
             android:label="@string/title_activity_gesture2" >
+        </activity>
+        <activity
+            android:name=".NewGestureActivity"
+            android:label="@string/title_activity_new_gesture" >
         </activity>
     </application>
 

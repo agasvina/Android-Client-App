@@ -43,6 +43,7 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
+import com.harry.storq.NewGestureActivity;
 import com.harry.storq.R;
 import com.harry.storq.adapters.MessageAdapter;
 import com.harry.storq.adapters.SectionsPagerAdapter;
