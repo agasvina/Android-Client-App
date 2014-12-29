@@ -71,5 +71,6 @@
     <string name="gender">Gender</string>
     <string name="email">Email</string>
     <string name="title_activity_send_storq">SendStorqActivity</string>
+    <string name="title_activity_gesture2">Gesture2Activity</string>
 
 </resources>

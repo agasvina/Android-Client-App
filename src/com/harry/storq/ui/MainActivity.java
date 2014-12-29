@@ -246,6 +246,22 @@ public class MainActivity extends FragmentActivity implements
         });
 		
 		
+		
+
+		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(ParseConstants.CLASS_MESSAGES);
+		query.whereEqualTo(ParseConstants.KEY_RECIPIENT_IDS, ParseUser.getCurrentUser().getObjectId());
+		query.findInBackground(new FindCallback<ParseObject>() {
+			@Override
+			public void done(List<ParseObject> messages, ParseException e) {	
+				if (e == null) {
+					// We found messages!
+					Intent intent = new Intent(MainActivity.this, Gesture2Activity.class);
+					startActivityForResult(intent, 1);
+				}
+			}
+		});
+		
+		
 
 		
 		

@@ -134,8 +134,12 @@
         </receiver>
 
         <activity
-            android:name="com.harry.storq.ui.SendStorqActivity"
+            android:name=".ui.SendStorqActivity"
             android:label="@string/title_activity_send_storq" >
+        </activity>
+        <activity
+            android:name="com.harry.storq.ui.Gesture2Activity"
+            android:label="@string/title_activity_gesture2" >
         </activity>
     </application>
 
