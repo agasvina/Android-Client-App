@@ -26,17 +26,10 @@ import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
-//This will be edited to send an email...
-
-
 public class SendStorqActivity extends Activity {
 
 	public static final String TAG = RecipientsActivity.class.getSimpleName();
 
-	protected ParseRelation<ParseUser> mFriendsRelation;
-	protected ParseUser mCurrentUser;	
-	protected List<ParseUser> mFriends;	
-	protected MenuItem mSendMenuItem;
 	protected Uri mMediaUri;
 	protected String mFileType;
 	protected GridView mGridView;
@@ -57,7 +50,6 @@ public class SendStorqActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_send_storq);
-		// Show the Up button in the action bar.
 		mUsers = new ArrayList<ParseUser>();
 		
 		ParseQuery<ParseUser> query = ParseUser.getQuery();
@@ -69,8 +61,7 @@ public class SendStorqActivity extends Activity {
 				mUsers.add(p);
 			}
 		} catch (ParseException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			//e1.printStackTrace();
 		}
 		
 		
@@ -109,43 +100,47 @@ public class SendStorqActivity extends Activity {
 		ParseObject message = new ParseObject(ParseConstants.CLASS_MESSAGES);
 		message.put(ParseConstants.KEY_SENDER_ID, ParseUser.getCurrentUser().getObjectId());
 		message.put(ParseConstants.KEY_SENDER_NAME, ParseUser.getCurrentUser().getUsername());
+		
+		//Choose Random recipient
 		recipientId = getRecipientIds();
 		message.put(ParseConstants.KEY_RECIPIENT_IDS, recipientId);
+		
 		byte[] fileBytes = msg.getBytes();
 		message.put(ParseConstants.KEY_FILE_TYPE, ParseConstants.TYPE_TEXT);
 		ParseFile file = new ParseFile("testMsg.txt",fileBytes);
+		
 		message.put(ParseConstants.KEY_FILE, file);
 		message.put("storq", msg);
-	if(forward) {				
-	    message.put("contributors", senders);
-			
-	} else {
-		//TODO: put the message 
-		String gender = ParseUser.getCurrentUser().getString("gender");
-		if(gender.equals("female")) {
-			gender = "F";
-		} else if (gender.equals("male")) {
-			gender = "M";
+		
+		//Add information: Location and Gender
+		if(forward) {				
+		    message.put("contributors", senders);	
 		} else {
-			gender = "NA";
-		}
-		String contributor ="- " +gender + ", " + ParseUser.getCurrentUser().getString("location"); 
-		message.put("contributors", contributor + "~");
-
-	}
+			//TODO: put the message 
+			String gender = ParseUser.getCurrentUser().getString("gender");
+			if(gender.equals("female")) {
+				gender = "F";
+			} else if (gender.equals("male")) {
+				gender = "M";
+			} else {
+				gender = "NA";
+			}
+			String contributor ="- " +gender + ", " + ParseUser.getCurrentUser().getString("location"); 
+			message.put("contributors", contributor + "~");
 	
+		}
+		
 	return message;
+	
 	}
 		
 	//select Random user..
 	protected ArrayList<String> getRecipientIds() {
 		ArrayList<String> recipientIds = new ArrayList<String>();
 		Random rnd = new Random();
-		//TODO: Fix the random recipient.
+		//TODO: Fix the random recipient.. more robust algorithm
 		int res = rnd.nextInt(mUsers.size());
 		recipientIds.add(mUsers.get(res).getObjectId());
-		//choose from existing user as well..
-		//recipientIds.add("a8RmRw9Kh2");
 		return recipientIds;
 	}
 	
@@ -155,7 +150,6 @@ public class SendStorqActivity extends Activity {
 			@Override
 			public void done(ParseException e) {
 				if (e == null) {
-					// success!
 					sendPushNotifications();
 					Toast.makeText(SendStorqActivity.this, R.string.success_message, Toast.LENGTH_LONG).show();
 				}

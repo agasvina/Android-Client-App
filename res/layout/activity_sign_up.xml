@@ -54,7 +54,7 @@
 			style="@style/AuthEditText"
             android:hint="@string/email_hint"
             android:inputType="textEmailAddress"
-            android:textColor="@android:color/black"  />
+             />
     </LinearLayout>
     
     <ImageView 

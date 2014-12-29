@@ -29,8 +29,6 @@ public class FeedbackActivity extends Activity {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		//set the text editor and button
 		Button button = (Button) findViewById(R.id.getTextButton);
 		button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -42,7 +40,6 @@ public class FeedbackActivity extends Activity {
         		message.put(ParseConstants.KEY_SENDER_NAME, ParseUser.getCurrentUser().getUsername());
         		message.put(ParseConstants.KEY_EMAIL, ParseUser.getCurrentUser().getEmail());
         		message.put(ParseConstants.KEY_FEED_MESSAGE, feeds);
-        		//Save feedback to the background...
         		message.saveInBackground(new SaveCallback() {
         			@Override
         			public void done(ParseException e) {

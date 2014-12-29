@@ -33,20 +33,18 @@ public class Gesture2Activity extends Activity {
 	  	protected TextView text3;
 	  	protected TextView text4;
 	  	
-	  	private GestureDetector gestureDetector;
-		ParseObject currentStorq;
-		String objectId;
-		String storq;
-		Intent chaining;
-		TextView another;
-		String [] listMessage;
-		ArrayList<String> parseObjectId;
-		int counter;
+		protected String storq;
+		protected Intent chaining;
+		protected boolean forwarded;
+
+		protected int counter;
+	  	protected GestureDetector gestureDetector;
 		protected SwipeRefreshLayout mSwipeRefreshLayout;
+		
+		
 		protected List<ParseObject> mMessages;
 		protected Map<String, ParseObject> MapMessages;
-		String firstObjectId;
-		boolean forwarded;
+		protected ArrayList<String> parseObjectId;
 	  
 	  @SuppressWarnings("deprecation")
 	  @Override
@@ -129,9 +127,7 @@ public class Gesture2Activity extends Activity {
 					text1.setText(names[0]);
 				}
 				
-					text4.setText(""+ names.length + " chains");
-				
-				
+					text4.setText(""+ names.length + " chains");	
 				counter--;
 		  } else {
 			  finish();
@@ -139,15 +135,6 @@ public class Gesture2Activity extends Activity {
 	}
 	  
 	  
-
-
-	
-	  
-	  
-	  
-
-	  /* ... */
-
 	  @Override
 	  public boolean onTouchEvent(MotionEvent event) {
 	    if (gestureDetector.onTouchEvent(event)) {
@@ -157,22 +144,22 @@ public class Gesture2Activity extends Activity {
 	  }
 
 	  private void onLeftSwipe() {
-		  //text.setText("Left Swipe");
-		  finish();
-	  
-	  }
-
-	  private void onRightSwipe() {
-		    startActivity(chaining);
-		    finish();
-
-		  
-	  }
-	  
-	  private void onUpSwipe() {
 		  showStorq();
 	  }
 
+	  private void onRightSwipe() {
+		  showStorq(); 
+	  }
+	  
+	  private void onUpSwipe() {
+		  startActivity(chaining);
+		  finish();
+	  }
+
+	  
+	  private void onDownSwipe() {
+		  
+	  }
 
 
 	private void deleteSender(ParseObject dummy) {
@@ -194,10 +181,7 @@ public class Gesture2Activity extends Activity {
 			}
 	}
 	  
-	  
-	  private void onDownSwipe() {
-		  
-	  }
+
 	  
 
 	  // Private class for gestures
@@ -225,15 +209,12 @@ public class Gesture2Activity extends Activity {
 	        } else if (-diff > SWIPE_MIN_DISTANCE
 	        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
 	        	Gesture2Activity.this.onRightSwipe();
-	        
-	        // Up swipe 
-	        }// else if
+	        }
 	        
 	        if (diffY > SWIPE_MIN_DISTANCE
 	        && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
 	        	Gesture2Activity.this.onUpSwipe();
 
-	        // Right swipe
 	        } else if (-diffY > SWIPE_MIN_DISTANCE
 	        && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
 	        	Gesture2Activity.this.onDownSwipe();

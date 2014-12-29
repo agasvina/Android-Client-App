@@ -39,4 +39,16 @@
         android:layout_marginRight="29dp"
         android:text="Send" />
 
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="21dp"
+        android:text="@string/feedback_request"
+        android:textAppearance="?android:attr/textAppearanceSmall" 
+        android:textColor="@android:color/black" />
+
 </RelativeLayout>

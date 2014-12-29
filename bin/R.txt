@@ -372,6 +372,7 @@ int string error_selecting_file_title 0x7f070042
 int string error_sending_message 0x7f070044
 int string error_title 0x7f070033
 int string facebook_app_id 0x7f07003b
+int string feedback_request 0x7f07005c
 int string feedback_respond 0x7f07005a
 int string gender 0x7f070055
 int string general_error 0x7f070037
@@ -385,8 +386,10 @@ int string menu_edit_friends_label 0x7f070031
 int string menu_logout_label 0x7f07002e
 int string menu_send_label 0x7f070041
 int string menu_text_label 0x7f070035
+int string no_storq 0x7f07005b
 int string password_hint 0x7f070024
 int string push_message 0x7f07004d
+int string searching_storq 0x7f07005d
 int string sign_up_button_label 0x7f070029
 int string sign_up_text 0x7f070026
 int string signup_error_message 0x7f07002a

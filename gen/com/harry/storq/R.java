@@ -580,6 +580,7 @@ containing a value of this type.
         public static final int error_sending_message=0x7f070044;
         public static final int error_title=0x7f070033;
         public static final int facebook_app_id=0x7f07003b;
+        public static final int feedback_request=0x7f07005c;
         public static final int feedback_respond=0x7f07005a;
         public static final int gender=0x7f070055;
         public static final int general_error=0x7f070037;
@@ -593,8 +594,10 @@ containing a value of this type.
         public static final int menu_logout_label=0x7f07002e;
         public static final int menu_send_label=0x7f070041;
         public static final int menu_text_label=0x7f070035;
+        public static final int no_storq=0x7f07005b;
         public static final int password_hint=0x7f070024;
         public static final int push_message=0x7f07004d;
+        public static final int searching_storq=0x7f07005d;
         public static final int sign_up_button_label=0x7f070029;
         public static final int sign_up_text=0x7f070026;
         public static final int signup_error_message=0x7f07002a;

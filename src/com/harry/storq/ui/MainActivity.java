@@ -5,11 +5,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Random;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,7 +33,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.facebook.FacebookRequestError;
@@ -44,20 +41,15 @@ import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
 import com.harry.storq.R;
-import com.harry.storq.adapters.MessageAdapter;
 import com.harry.storq.adapters.SectionsPagerAdapter;
 import com.harry.storq.utils.ParseConstants;
 import com.parse.FindCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
-import com.parse.ParseFile;
-import com.parse.ParseInstallation;
 import com.parse.ParseObject;
-import com.parse.ParsePush;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import com.parse.SaveCallback;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -71,9 +63,7 @@ public class MainActivity extends FragmentActivity implements
 	
 	public static final int MEDIA_TYPE_IMAGE = 4;
 	public static final int MEDIA_TYPE_VIDEO = 5;
-	public static final int MEDIA_TYPE_TEXT = 6;
-	public static final int CREATE_TEXT = 7;
-	
+	public static final int MEDIA_TYPE_TEXT = 6;	
 	public static final int FILE_SIZE_LIMIT = 1024*1024*10; // 10 MB
 	
 	protected Uri mMediaUri;
@@ -102,26 +92,8 @@ public class MainActivity extends FragmentActivity implements
 			switch(which) {
 				case 0: 
 				    Intent intent = new Intent(MainActivity.this,FeedbackActivity.class);
-				    startActivityForResult(intent,CREATE_TEXT);
+				    startActivityForResult(intent,1);
 					break;
-				//case 1: 
-					//testing gesture
-					//send activity to the gesture Activity
-//					Toast.makeText(MainActivity.this, ParseUser.getCurrentUser().getString("gender"), Toast.LENGTH_LONG).show();
-//					Intent intentGest = new Intent(MainActivity.this,GestureActivity.class);
-//					startActivity(intentGest);
-					//break;
-//				case 2: // Choose picture
-//					Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//					choosePhotoIntent.setType("image/*");
-//					startActivityForResult(choosePhotoIntent, PICK_PHOTO_REQUEST);
-//					break;
-//				case 3: // Choose video
-//					Intent chooseVideoIntent = new Intent(Intent.ACTION_GET_CONTENT);
-//					chooseVideoIntent.setType("video/*");
-//					Toast.makeText(MainActivity.this, R.string.video_file_size_warning, Toast.LENGTH_LONG).show();
-//					startActivityForResult(chooseVideoIntent, PICK_VIDEO_REQUEST);
-//					break;
 			}
 		}
 
@@ -199,6 +171,7 @@ public class MainActivity extends FragmentActivity implements
 	 */
 	ViewPager mViewPager;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -222,16 +195,7 @@ public class MainActivity extends FragmentActivity implements
 		else {
 			Log.i(TAG, currentUser.getUsername());
 		}
-	    
-		
-		//TODO: is this correct...?
-		//Retrieve message... 
-		//retrieveMessages();
-		
-		
-		
-		
-		
+	    	
 		//Gesture Activity
 		gestureDetector = new GestureDetector(
                 new SwipeGestureDetector());		
@@ -248,22 +212,7 @@ public class MainActivity extends FragmentActivity implements
 		
 		
 
-		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(ParseConstants.CLASS_MESSAGES);
-		query.whereEqualTo(ParseConstants.KEY_RECIPIENT_IDS, ParseUser.getCurrentUser().getObjectId());
-		query.findInBackground(new FindCallback<ParseObject>() {
-			@Override
-			public void done(List<ParseObject> messages, ParseException e) {	
-				if (e == null) {
-					// We found messages!
-					Intent intent = new Intent(MainActivity.this, Gesture2Activity.class);
-					startActivityForResult(intent, 1);
-				}
-			}
-		});
-		
-		
-
-		
+		refresh();
 		
 		
 		//This is for restoring the tab for future request... (in case they want friends)
@@ -304,6 +253,24 @@ public class MainActivity extends FragmentActivity implements
 					.setTabListener(this));
 		}
 		*/
+	}
+
+
+	public void refresh() {
+		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(ParseConstants.CLASS_MESSAGES);
+		query.whereEqualTo(ParseConstants.KEY_RECIPIENT_IDS, ParseUser.getCurrentUser().getObjectId());
+		query.findInBackground(new FindCallback<ParseObject>() {
+			@Override
+			public void done(List<ParseObject> messages, ParseException e) {	
+				if (e == null) {
+					// We found messages!
+					Intent intent = new Intent(MainActivity.this, Gesture2Activity.class);
+					startActivityForResult(intent, 1);
+				} else {
+					Toast.makeText(MainActivity.this, R.string.no_storq, Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 	}
 	
 	
@@ -400,16 +367,6 @@ public class MainActivity extends FragmentActivity implements
 				ParseUser.logOut();
 				navigateToLogin();
 				break;
-//			case R.id.action_edit_friends:
-//				Intent intent = new Intent(this, EditFriendsActivity.class);
-//				startActivity(intent);
-//				break;
-//			case R.id.action_camera:
-//				AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//				builder.setItems(R.array.camera_choices, mDialogListener);
-//				AlertDialog dialog = builder.create();
-//				dialog.show();
-//				break;
 			case R.id.action_mail:
 				AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
 				builder2.setItems(R.array.text_choices, mDialogListener);
@@ -498,8 +455,6 @@ public class MainActivity extends FragmentActivity implements
 		    request.executeAsync();
 		  }
 	
-	 
-	 //Add gesture to the Main Activity...
 
 	  @Override
 	  public boolean onTouchEvent(MotionEvent event) {
@@ -513,11 +468,13 @@ public class MainActivity extends FragmentActivity implements
 	  }
 
 	  private void onRightSwipe() {
-		  sendMessage();
+			Toast.makeText(MainActivity.this, R.string.searching_storq, Toast.LENGTH_SHORT).show();
+			refresh();
+			
 	  }
 	  
 	  private void onUpSwipe() {
-	
+		  sendMessage();
 	  }
 	  
 
@@ -536,6 +493,7 @@ public class MainActivity extends FragmentActivity implements
 		passingIntent.putExtra("storqm", message);
 		passingIntent.putExtra("storqt", true);
 		startActivity(passingIntent);
+		storqText.setText("");
 	}
 
 
@@ -561,20 +519,15 @@ public class MainActivity extends FragmentActivity implements
 	           MainActivity.this.onLeftSwipe();
 
 	        // Right swipe
-	        //only the right Swipe will pass the message... 
-	        //The other is not...
 	        } else if (-diff > SWIPE_MIN_DISTANCE
 	        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
 	        	MainActivity.this.onRightSwipe();
 	        
-	        // Up swipe 
-	        }// else if
+	        }
 	        
 	        if (diffY > SWIPE_MIN_DISTANCE
 	        && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
 	        	MainActivity.this.onUpSwipe();
-
-	        // Right swipe
 	        } else if (-diffY > SWIPE_MIN_DISTANCE
 	        && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
 	        	MainActivity.this.onDownSwipe();
@@ -582,63 +535,13 @@ public class MainActivity extends FragmentActivity implements
 	        
 	        
 	      } catch (Exception e) {
-	        Log.e("Gesture Activity", "Error on gestures");
+	    	  //Log.e("Gesture Activity", "Error on gestures");
 	      }
 	      return false;
 	    }
 	  }
 	
-
-	  //Retrieving the message...
-	  private void retrieveMessages() {
-			
-			ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(ParseConstants.CLASS_MESSAGES);
-			query.whereEqualTo(ParseConstants.KEY_RECIPIENT_IDS, ParseUser.getCurrentUser().getObjectId());
-			query.addDescendingOrder(ParseConstants.KEY_CREATED_AT);
-			query.findInBackground(new FindCallback<ParseObject>() {
-				@Override
-				public void done(List<ParseObject> messages, ParseException e) {
-					
-					if (e == null) {
-						// We found messages!
-						mMessages = messages;
-						listMessage = new String[mMessages.size()];
-						parseObjectId = new String[mMessages.size()];
-						String[] usernames = new String[mMessages.size()];
-						int i = 0;
-						for(ParseObject message : mMessages) {
-							usernames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
-							listMessage[i] = message.getString("storq");
-							parseObjectId[i] = message.getString(ParseConstants.KEY_OBJECT_ID);
-							i++;
-						}
-					}
-				}
-			});
-		}
-
 	  
-	  //Show message automatically
-		public void sendStorq() {		
-			ParseObject message = mMessages.get(0);
-			String messageType = message.getString(ParseConstants.KEY_FILE_TYPE);
-			ParseFile file = message.getParseFile(ParseConstants.KEY_FILE);
-			Uri fileUri = Uri.parse(file.getUrl());
-			
-			if (messageType.equals("text")) {
-				String storqText = message.getString("storq");
-				String objectId  = message.getString("objectId"); //TODO: create parse constant.
-				Intent intent = new Intent(this,GestureActivity.class);
-				intent.putExtra("storq", storqText);
-				intent.putExtra(ParseConstants.KEY_OBJECT_ID, parseObjectId);	
-				intent.putExtra("contributors", message.getString("contributors"));
-				
-				ParseConstants.deleteMessage(message);		
-				startActivity(intent);
-			} 
-
-			
-		}
-	  
+	
 	
 }
