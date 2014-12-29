@@ -120,7 +120,7 @@ public class LoginActivity extends Activity {
 	  public void onLoginClick(View v) {
 	//    progressDialog = ProgressDialog.show(LoginActivity.this, "", "Logging in...", true);
 	    
-	    List<String> permissions = Arrays.asList("public_profile", "email");
+	    List<String> permissions = Arrays.asList("public_profile", "email","user_location");
 	    // NOTE: for extended permissions, like "user_about_me", your app must be reviewed by the Facebook team
 	    // (https://developers.facebook.com/docs/facebook-login/permissions/)
 	    

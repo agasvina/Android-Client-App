@@ -5,8 +5,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,6 +24,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
@@ -31,6 +35,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.facebook.FacebookRequestError;
@@ -39,11 +44,20 @@ import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
 import com.harry.storq.R;
+import com.harry.storq.adapters.MessageAdapter;
 import com.harry.storq.adapters.SectionsPagerAdapter;
 import com.harry.storq.utils.ParseConstants;
+import com.parse.FindCallback;
 import com.parse.ParseAnalytics;
+import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
+import com.parse.ParseFile;
+import com.parse.ParseInstallation;
+import com.parse.ParseObject;
+import com.parse.ParsePush;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class MainActivity extends FragmentActivity implements
 		ActionBar.TabListener {
@@ -64,11 +78,22 @@ public class MainActivity extends FragmentActivity implements
 	
 	protected Uri mMediaUri;
 	
+	
 	//Add gesture activity
   	protected GestureDetector gestureDetector;
   	protected Intent passingIntent;
   	protected EditText storqText;
   	protected String message = "";
+  	
+  	//add ability to choose random user.
+	protected List<ParseUser> mUsers;
+	
+	//Show message automatically...
+	public static List<ParseObject> mMessages;
+	protected SwipeRefreshLayout mSwipeRefreshLayout;
+	protected String [] listMessage;
+	protected String [] parseObjectId;
+
 	
 	protected DialogInterface.OnClickListener mDialogListener = 
 			new DialogInterface.OnClickListener() {
@@ -199,23 +224,30 @@ public class MainActivity extends FragmentActivity implements
 		}
 	    
 		
+		//TODO: is this correct...?
+		//Retrieve message... 
+		//retrieveMessages();
+		
+		
+		
+		
+		
 		//Gesture Activity
 		gestureDetector = new GestureDetector(
                 new SwipeGestureDetector());		
 		
-		passingIntent= new Intent(MainActivity.this, RecipientsActivity.class);
-	    storqText = (EditText) findViewById(R.id.editText);
-	    message = storqText.getText().toString();
+		
 		//Binding the text edit and button to the appropriate android object
 		Button button = (Button) findViewById(R.id.getTextButton);
 		button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Perform action on click
-        	    passingIntent.putExtra("storqm", message);
-        	    passingIntent.putExtra("storqt", true);
-        	    startActivity(passingIntent);
+            	sendMessage();
             }
         });
+		
+		
+
+		
 		
 		
 		//This is for restoring the tab for future request... (in case they want friends)
@@ -257,6 +289,7 @@ public class MainActivity extends FragmentActivity implements
 		}
 		*/
 	}
+	
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -399,16 +432,25 @@ public class MainActivity extends FragmentActivity implements
 		            ParseUser currentUser = ParseUser.getCurrentUser();
 		            JSONObject userProfile = new JSONObject();
 		            try {
-		              // Populate the JSON object
+                      
+		            	//}
 		              userProfile.put("facebookId", user.getId());
 		              userProfile.put("name", user.getName());
 		              if (user.getProperty("gender") != null) {
 		                userProfile.put("gender", user.getProperty("gender"));
-		              } 
+		            	currentUser.put("gender", user.getProperty("gender"));
+		              } else {
+			            currentUser.put("gender", "NA");
+		              }
 		              if (user.getProperty("email") != null) {
 		                userProfile.put("email", user.getProperty("email"));
 			            currentUser.put("email", user.getProperty("email"));
-
+			          }
+		              if (user.getLocation().getProperty("name") != null) {
+		            	  userProfile.put("loc", user.getLocation().getProperty("name"));
+		            	  currentUser.put("location", user.getLocation().getProperty("name"));
+		              } else {
+		            	  currentUser.put("location", "Unknown");
 		              }
 
 		              // Save the user profile info in a user property
@@ -455,9 +497,7 @@ public class MainActivity extends FragmentActivity implements
 	  }
 
 	  private void onRightSwipe() {
-  	    passingIntent.putExtra("storqm", message);
-  	    passingIntent.putExtra("storqt", true);
-  	    startActivity(passingIntent);
+		  sendMessage();
 	  }
 	  
 	  private void onUpSwipe() {
@@ -472,7 +512,18 @@ public class MainActivity extends FragmentActivity implements
 	  }
 	  
 
-	  // Private class for gestures
+	  public void sendMessage() {
+		passingIntent= new Intent(MainActivity.this, SendStorqActivity.class);
+		storqText = (EditText) findViewById(R.id.editText);
+		message = storqText.getText().toString();
+		// Perform action on click
+		passingIntent.putExtra("storqm", message);
+		passingIntent.putExtra("storqt", true);
+		startActivity(passingIntent);
+	}
+
+
+	// Private class for gestures
 	  private class SwipeGestureDetector
 	          extends SimpleOnGestureListener {
 	    // Swipe properties, you can change it to make the swipe
@@ -522,9 +573,56 @@ public class MainActivity extends FragmentActivity implements
 	  }
 	
 
-	  //SENDING THE MESSAGE RANDDOMLY
+	  //Retrieving the message...
+	  private void retrieveMessages() {
+			
+			ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(ParseConstants.CLASS_MESSAGES);
+			query.whereEqualTo(ParseConstants.KEY_RECIPIENT_IDS, ParseUser.getCurrentUser().getObjectId());
+			query.addDescendingOrder(ParseConstants.KEY_CREATED_AT);
+			query.findInBackground(new FindCallback<ParseObject>() {
+				@Override
+				public void done(List<ParseObject> messages, ParseException e) {
+					
+					if (e == null) {
+						// We found messages!
+						mMessages = messages;
+						listMessage = new String[mMessages.size()];
+						parseObjectId = new String[mMessages.size()];
+						String[] usernames = new String[mMessages.size()];
+						int i = 0;
+						for(ParseObject message : mMessages) {
+							usernames[i] = message.getString(ParseConstants.KEY_SENDER_NAME);
+							listMessage[i] = message.getString("storq");
+							parseObjectId[i] = message.getString(ParseConstants.KEY_OBJECT_ID);
+							i++;
+						}
+					}
+				}
+			});
+		}
+
 	  
+	  //Show message automatically
+		public void sendStorq() {		
+			ParseObject message = mMessages.get(0);
+			String messageType = message.getString(ParseConstants.KEY_FILE_TYPE);
+			ParseFile file = message.getParseFile(ParseConstants.KEY_FILE);
+			Uri fileUri = Uri.parse(file.getUrl());
+			
+			if (messageType.equals("text")) {
+				String storqText = message.getString("storq");
+				String objectId  = message.getString("objectId"); //TODO: create parse constant.
+				Intent intent = new Intent(this,GestureActivity.class);
+				intent.putExtra("storq", storqText);
+				intent.putExtra(ParseConstants.KEY_OBJECT_ID, parseObjectId);	
+				intent.putExtra("contributors", message.getString("contributors"));
+				
+				ParseConstants.deleteMessage(message);		
+				startActivity(intent);
+			} 
+
+			
+		}
 	  
-	 
 	
 }

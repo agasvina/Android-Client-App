@@ -31,7 +31,8 @@
     <string name="video_size_limit_warning">The selected video must be less than 10 MB.</string>
     <string name="error_selecting_file">There was an error with the file selected. Please select a different file.</string>
     <string name="error_file_too_large">The selected file is too large! Select a new file.</string>
-	<string name="facebook_app_id">405243752968279</string>
+    <string name="facebook_app_id">405243752968279</string>
+
     <string-array name="camera_choices">
         <item>Take Picture</item>
         <item>Take Video</item>
@@ -68,6 +69,7 @@
     <string name="app_id">405243752968279</string>
     <string name="login_intro">Check out your Facebook profile by logging in with the button below!</string>
     <string name="gender">Gender</string>
-    <string name="email">Email</string>    
+    <string name="email">Email</string>
+    <string name="title_activity_send_storq">SendStorqActivity</string>
 
 </resources>

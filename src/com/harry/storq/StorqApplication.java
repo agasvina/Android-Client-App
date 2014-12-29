@@ -23,8 +23,8 @@ public class StorqApplication extends Application {
 
 	    
 	    //PushService.setDefaultPushCallback(this, MainActivity.class);
-//	    PushService.setDefaultPushCallback(this, MainActivity.class, 
-//	    		R.drawable.ic_stat_ic_launcher);
+	    PushService.setDefaultPushCallback(this, MainActivity.class, 
+	    		R.drawable.ic_stat_ic_launcher);
 	    ParseInstallation.getCurrentInstallation().saveInBackground();
 	}
 	

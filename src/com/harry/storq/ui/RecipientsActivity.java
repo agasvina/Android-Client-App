@@ -59,6 +59,7 @@ public class RecipientsActivity extends Activity {
 
 	protected List<ParseUser> mUsers;
 	protected String senders;
+	protected ArrayList<String> recipientId;
 
 	
 	@Override
@@ -221,7 +222,8 @@ public class RecipientsActivity extends Activity {
 		ParseObject message = new ParseObject(ParseConstants.CLASS_MESSAGES);
 		message.put(ParseConstants.KEY_SENDER_ID, ParseUser.getCurrentUser().getObjectId());
 		message.put(ParseConstants.KEY_SENDER_NAME, ParseUser.getCurrentUser().getUsername());
-		message.put(ParseConstants.KEY_RECIPIENT_IDS, getRecipientIds());
+		recipientId = getRecipientIds();
+		message.put(ParseConstants.KEY_RECIPIENT_IDS, recipientId);
 		byte[] fileBytes = msg.getBytes();
 		message.put(ParseConstants.KEY_FILE_TYPE, ParseConstants.TYPE_TEXT);
 		ParseFile file = new ParseFile("testMsg.txt",fileBytes);
@@ -274,8 +276,8 @@ public class RecipientsActivity extends Activity {
 			public void done(ParseException e) {
 				if (e == null) {
 					// success!
-					Toast.makeText(RecipientsActivity.this, R.string.success_message, Toast.LENGTH_LONG).show();
 					sendPushNotifications();
+					Toast.makeText(RecipientsActivity.this, R.string.success_message, Toast.LENGTH_LONG).show();
 				}
 				else {
 					AlertDialog.Builder builder = new AlertDialog.Builder(RecipientsActivity.this);
@@ -309,7 +311,8 @@ public class RecipientsActivity extends Activity {
 	
 	protected void sendPushNotifications() {
 		ParseQuery<ParseInstallation> query = ParseInstallation.getQuery();
-		query.whereContainedIn(ParseConstants.KEY_USER_ID, getRecipientIds());
+		//query.whereContainedIn(ParseConstants.KEY_USER_ID, getRecipientIds());
+		query.whereContainedIn(ParseConstants.KEY_USER_ID,recipientId);
 		
 		// send push notification
 		ParsePush push = new ParsePush();

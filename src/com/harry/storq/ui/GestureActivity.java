@@ -97,12 +97,7 @@ public class GestureActivity extends ListActivity {
 	     chaining.putExtra("storqm", storq);
 	     chaining.putExtra("storqt", false);
 	     chaining.putExtra("forward", true);
-	     chaining.putExtra("contributors", con);
-	     
-	     
-	     
-	     
-		
+	     chaining.putExtra("contributors", con);	
 	  
 	  }
 	  
