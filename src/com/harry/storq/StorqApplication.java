@@ -43,3 +43,10 @@ public class StorqApplication extends Application {
 //android:showAsAction="always"
 //android:title="@string/menu_camera_label">
 //</item>
+
+
+//For Edit Friends...
+//<item
+//android:id="@+id/action_edit_friends"
+//android:title="@string/menu_edit_friends_label">
+//</item>

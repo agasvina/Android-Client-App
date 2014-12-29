@@ -43,7 +43,6 @@ import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.model.GraphUser;
-import com.harry.storq.NewGestureActivity;
 import com.harry.storq.R;
 import com.harry.storq.adapters.MessageAdapter;
 import com.harry.storq.adapters.SectionsPagerAdapter;
@@ -102,16 +101,16 @@ public class MainActivity extends FragmentActivity implements
 		public void onClick(DialogInterface dialog, int which) {
 			switch(which) {
 				case 0: 
-				    Intent intent = new Intent(MainActivity.this,GetActivity.class);
+				    Intent intent = new Intent(MainActivity.this,FeedbackActivity.class);
 				    startActivityForResult(intent,CREATE_TEXT);
 					break;
-				case 1: 
+				//case 1: 
 					//testing gesture
 					//send activity to the gesture Activity
-					Toast.makeText(MainActivity.this, ParseUser.getCurrentUser().getString("gender"), Toast.LENGTH_LONG).show();
-					Intent intentGest = new Intent(MainActivity.this,GestureActivity.class);
-					startActivity(intentGest);
-					break;
+//					Toast.makeText(MainActivity.this, ParseUser.getCurrentUser().getString("gender"), Toast.LENGTH_LONG).show();
+//					Intent intentGest = new Intent(MainActivity.this,GestureActivity.class);
+//					startActivity(intentGest);
+					//break;
 //				case 2: // Choose picture
 //					Intent choosePhotoIntent = new Intent(Intent.ACTION_GET_CONTENT);
 //					choosePhotoIntent.setType("image/*");
@@ -401,10 +400,10 @@ public class MainActivity extends FragmentActivity implements
 				ParseUser.logOut();
 				navigateToLogin();
 				break;
-			case R.id.action_edit_friends:
-				Intent intent = new Intent(this, EditFriendsActivity.class);
-				startActivity(intent);
-				break;
+//			case R.id.action_edit_friends:
+//				Intent intent = new Intent(this, EditFriendsActivity.class);
+//				startActivity(intent);
+//				break;
 //			case R.id.action_camera:
 //				AlertDialog.Builder builder = new AlertDialog.Builder(this);
 //				builder.setItems(R.array.camera_choices, mDialogListener);

@@ -19,7 +19,7 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="Theme.Ribbit" parent="@android:style/Theme.Holo.Light">
+    <style name="Theme.Ribbit" parent="@android:style/Theme.Holo.Light.NoActionBar">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_ribbit</item>
         <item name="android:popupMenuStyle">@style/PopupMenu.Ribbit</item>
         <item name="android:dropDownListViewStyle">@style/DropDownListView.Ribbit</item>
@@ -108,7 +108,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_alignParentLeft">true</item>
         <item name="android:layout_alignParentTop">true</item>
-        <item name="android:src">@drawable/background</item>
+        <item name="android:src">@drawable/background_login</item>
     </style>
     
     <style name="AuthTitle" parent="android:Widget.Holo.Light.TextView">

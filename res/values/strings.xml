@@ -40,7 +40,7 @@
         <item>Choose Video</item>
     </string-array>
     <string-array name="text_choices">
-        <item>Create Message</item>
+        <item>Send us feedback</item>
     </string-array>
 
     <string name="video_file_size_warning">The selected video must be less than 10 MB.</string>
@@ -61,7 +61,7 @@
     <string name="content_desc_user_avatar">User avatar</string>
     <string name="content_desc_user_checkmark">User checkmark</string>
     <string name="push_message">You have a new Storq!</string>
-    <string name="title_activity_get">GetActivity</string>
+    <string name="title_activity_get">Send Us Feedback</string>
     <string name="title_activity_view_text">ViewTextActivity</string>
     <string name="title_activity_random">RandomActivity</string>
     <string name="title_activity_gesture">GestureActivity</string>
@@ -73,5 +73,6 @@
     <string name="title_activity_send_storq">SendStorqActivity</string>
     <string name="title_activity_gesture2">Gesture2Activity</string>
     <string name="title_activity_new_gesture">NewGestureActivity</string>
+    <string name="feedback_respond">Thank you for your feedback</string>
 
 </resources>

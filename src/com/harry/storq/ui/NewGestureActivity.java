@@ -1,4 +1,9 @@
-package com.harry.storq;
+package com.harry.storq.ui;
+
+import com.harry.storq.R;
+import com.harry.storq.R.id;
+import com.harry.storq.R.layout;
+import com.harry.storq.R.menu;
 
 import android.app.Activity;
 import android.os.Bundle;

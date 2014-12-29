@@ -121,8 +121,16 @@ public class SendStorqActivity extends Activity {
 			
 	} else {
 		//TODO: put the message 
-		String contributor = ParseUser.getCurrentUser().getString("gender")  + "-" + ParseUser.getCurrentUser().getString("location"); 
-		message.put("contributors", contributor + ",");
+		String gender = ParseUser.getCurrentUser().getString("gender");
+		if(gender.equals("female")) {
+			gender = "F";
+		} else if (gender.equals("male")) {
+			gender = "M";
+		} else {
+			gender = "NA";
+		}
+		String contributor ="- " +gender + ", " + ParseUser.getCurrentUser().getString("location"); 
+		message.put("contributors", contributor + "~");
 
 	}
 	

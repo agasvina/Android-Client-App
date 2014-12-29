@@ -80,8 +80,6 @@ public class Gesture2Activity extends Activity {
 				MapMessages.put(m.getObjectId(), m);
 				parseObjectId.add(m.getObjectId());
 			}
-//			MapMessages.remove(firstObjectId);
-//			parseObjectId.remove(firstObjectId);
 			counter = parseObjectId.size();
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -99,7 +97,16 @@ public class Gesture2Activity extends Activity {
 			  	ParseObject dummy = MapMessages.get(parseObjectId.get(counter-1));
 			  	String storq = dummy.getString("storq");
 			  	String con = dummy.getString("contributors");
-			  	con += ParseUser.getCurrentUser().getUsername() + ",";
+			  	//Get location and gender...
+			  	String gender = ParseUser.getCurrentUser().getString("gender");
+				if(gender.equals("female")) {
+					gender = "F";
+				} else if (gender.equals("male")) {
+					gender = "M";
+				} else {
+					gender = "NA";
+				}
+				con +="- " +gender + ", " + ParseUser.getCurrentUser().getString("location") + "~"; 
 			  	deleteSender(dummy);
 
 			     chaining = new Intent(Gesture2Activity.this, SendStorqActivity.class);

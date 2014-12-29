@@ -9,6 +9,7 @@ import com.parse.ParseUser;
 public final class ParseConstants {
 	// Class name
 	public static final String CLASS_MESSAGES = "Messages";
+	public static final String CLASS_FEEDBACK = "Feedback";
 	
 	// Field names
 	public static final String KEY_USER_ID = "userId";
@@ -20,6 +21,8 @@ public final class ParseConstants {
 	public static final String KEY_FILE = "file";
 	public static final String KEY_FILE_TYPE = "filetype";
 	public static final String KEY_CREATED_AT = "createdAt";
+	public static final String KEY_EMAIL = "email";
+	public static final String KEY_FEED_MESSAGE = "feedback";
 	
 	public static final String TYPE_IMAGE = "image";
 	public static final String TYPE_VIDEO = "video";
@@ -29,7 +32,7 @@ public final class ParseConstants {
 	
 	
 	public static String[] parseString(String senders) {
-        String[] tokens = senders.split(",");
+        String[] tokens = senders.split("~");
 		return tokens;
 	}
 	
