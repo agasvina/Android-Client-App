@@ -139,13 +139,7 @@ public class LoginActivity extends Activity {
 	        }
 	      }
 	    });
-	  }
-		    
-		    
-		    
-		 
-
-		  
+	  } 
 
 		  private void showUserDetailsActivity() {
 			    Intent intent = new Intent(this, MainActivity.class);
@@ -159,88 +153,4 @@ public class LoginActivity extends Activity {
 
 }
 
-
-
-
-
-
-
-/*
-
-package com.harry.storq.ui;
-import android.app.Activity;
-import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-
-import com.harry.storq.R;
-import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseFacebookUtils;
-import com.parse.ParseUser;
-
-import java.util.Arrays;
-import java.util.List;
-
-public class LoginActivity extends Activity {
-
-  private Dialog progressDialog;
-
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-
-    setContentView(R.layout.login_facebook);
-    // Check if there is a currently logged in user
-    // and it's linked to a Facebook account.
-    Parse.initialize(this, 
-	    	"kq2ROIwn7vWNTNqhGuZE635S3fQKGgDKKmhkoj4W", 
-	    	"qzwy4MG2oopzc34Nbq6sY40Mml5OqJ0YzZPv72b3");
-    ParseFacebookUtils.initialize("405243752968279");
-    ParseUser currentUser = ParseUser.getCurrentUser();
-    if ((currentUser != null) && ParseFacebookUtils.isLinked(currentUser)) {
-      // Go to the user info activity
-      showUserDetailsActivity();
-    }
-  }
-
-  @Override
-  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-    super.onActivityResult(requestCode, resultCode, data);
-    ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
-  }
-
-  public void onLoginClick(View v) {
-    progressDialog = ProgressDialog.show(LoginActivity.this, "", "Logging in...", true);
-    List<String> permissions = Arrays.asList("public_profile", "user_friends");
-    //change email to users friend. 
-    ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
-      @Override
-      public void done(ParseUser user, ParseException err) {
-        progressDialog.dismiss();
-        if (user == null) {
-          Log.d(MainActivity.TAG, "Uh oh. The user cancelled the Facebook login.");
-        } else if (user.isNew()) {
-          Log.d(MainActivity.TAG, "User signed up and logged in through Facebook!");
-          showUserDetailsActivity();
-        } else {
-          Log.d(MainActivity.TAG, "User logged in through Facebook!");
-          showUserDetailsActivity();
-        }
-      }
-    });
-  }
-
-  private void showUserDetailsActivity() {
-    Intent intent = new Intent(this, UserDetailsActivity.class);
-    startActivity(intent);
-  }
-}
-
-
-*/
 

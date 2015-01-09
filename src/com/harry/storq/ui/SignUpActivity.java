@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.harry.storq.R;
 import com.harry.storq.StorqApplication;
@@ -22,7 +23,20 @@ public class SignUpActivity extends Activity {
 	protected EditText mPassword;
 	protected EditText mEmail;
 	protected Button mSignUpButton;
-	protected Button mCancelButton;
+	
+	//add spinner...
+	Spinner spnr;
+	  String[] celebrities = {
+	      "Chris Hemsworth",
+	      "Jennifer Lawrence",
+	      "Jessica Alba",
+	      "Brad Pitt",
+	      "Tom Cruise",
+	      "Johnny Depp",
+	      "Megan Fox",
+	      "Paul Walker",
+	      "Vin Diesel"
+	  };
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,13 +51,6 @@ public class SignUpActivity extends Activity {
 		mPassword = (EditText)findViewById(R.id.passwordField);
 		mEmail = (EditText)findViewById(R.id.emailField);
 		
-		mCancelButton = (Button)findViewById(R.id.cancelButton);
-		mCancelButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
 		
 		
 		mSignUpButton = (Button)findViewById(R.id.signupButton);

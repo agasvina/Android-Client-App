@@ -16,6 +16,11 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+      <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    
+        <uses-permission 
+        android:name="android.permission.ACCESS_FINE_LOCATION" />
+    
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -27,11 +32,17 @@
 
     <uses-permission android:name="com.harry.storq.permission.C2D_MESSAGE" />
 
+    
     <application
         android:name=".StorqApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name">
+        
+        
+    <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"

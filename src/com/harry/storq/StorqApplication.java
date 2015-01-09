@@ -2,6 +2,7 @@ package com.harry.storq;
 
 import android.app.Application;
 
+import com.harry.storq.ui.Gesture2Activity;
 import com.harry.storq.ui.MainActivity;
 import com.harry.storq.utils.ParseConstants;
 import com.parse.Parse;
@@ -15,6 +16,7 @@ public class StorqApplication extends Application {
 	@Override
 	public void onCreate() { 
 		super.onCreate();
+		
 	    Parse.initialize(this, 
 	    	"kq2ROIwn7vWNTNqhGuZE635S3fQKGgDKKmhkoj4W", 
 	    	"qzwy4MG2oopzc34Nbq6sY40Mml5OqJ0YzZPv72b3");
@@ -23,8 +25,7 @@ public class StorqApplication extends Application {
 
 	    
 	    //PushService.setDefaultPushCallback(this, MainActivity.class);
-	    PushService.setDefaultPushCallback(this, MainActivity.class, 
-	    		R.drawable.ic_stat_ic_launcher);
+	    PushService.setDefaultPushCallback(this, MainActivity.class, R.drawable.ic_launcher);
 	    ParseInstallation.getCurrentInstallation().saveInBackground();
 	}
 	
@@ -34,19 +35,3 @@ public class StorqApplication extends Application {
 		installation.saveInBackground();
 	}
 }
-
-//Want camera:
-//Add in menu.res
-//<item
-//android:id="@+id/action_camera"
-//android:icon="@drawable/ic_menu_camera"
-//android:showAsAction="always"
-//android:title="@string/menu_camera_label">
-//</item>
-
-
-//For Edit Friends...
-//<item
-//android:id="@+id/action_edit_friends"
-//android:title="@string/menu_edit_friends_label">
-//</item>

@@ -80,7 +80,6 @@ public class Gesture2Activity extends Activity {
 			}
 			counter = parseObjectId.size();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		  

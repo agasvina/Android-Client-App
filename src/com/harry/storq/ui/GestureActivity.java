@@ -43,11 +43,6 @@ public class GestureActivity extends ListActivity {
 		String firstObjectId;
 		boolean forwarded;
 
-		
-		
-		
-
-
 	  
 	  @SuppressWarnings("deprecation")
 	  @Override
