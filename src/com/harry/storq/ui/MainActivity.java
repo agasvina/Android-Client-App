@@ -1,25 +1,21 @@
 package com.harry.storq.ui;
 
-import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.net.Uri;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -46,34 +42,32 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
 import com.harry.storq.R;
-import com.harry.storq.adapters.SectionsPagerAdapter;
-import com.harry.storq.utils.GPSTracker;
 import com.harry.storq.utils.ParseConstants;
-import com.harry.storq.utils.ReverseGeocode;
+import com.parse.FindCallback;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+//import com.squareup.okhttp.Request;
+//import com.squareup.okhttp.Response;
+
+
 
 public class MainActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
 	
 	public static final String TAG = MainActivity.class.getSimpleName();
+
 	
-	public static final int TAKE_PHOTO_REQUEST = 0;
-	public static final int TAKE_VIDEO_REQUEST = 1;
-	public static final int PICK_PHOTO_REQUEST = 2;
-	public static final int PICK_VIDEO_REQUEST = 3;
-	
-	public static final int MEDIA_TYPE_IMAGE = 4;
-	public static final int MEDIA_TYPE_VIDEO = 5;
 	public static final int MEDIA_TYPE_TEXT = 6;	
 	public static final int FILE_SIZE_LIMIT = 1024*1024*10; // 10 MB
 	
-	protected Uri mMediaUri;
-	protected static String Longitude;
-	protected static String Latitude;
+	protected static Double Longitude;
+	protected static Double Latitude;
 	
 	//Add gesture activity
   	protected GestureDetector gestureDetector;
@@ -84,11 +78,14 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
   	//add ability to choose random user.
 	protected List<ParseUser> mUsers;
 	
+	
+	//This is for string builder for the address.
+	protected static StringBuilder sb;
+	protected static String Location;
+	
 	//Show message automatically...
 	public static List<ParseObject> mMessages;
 	protected SwipeRefreshLayout mSwipeRefreshLayout;
-	protected String [] listMessage;
-	protected String [] parseObjectId;
 
 	
 	//added the location:
@@ -131,14 +128,12 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	 * intensive, it may be best to switch to a
 	 * {@link android.support.v4.app.FragmentStatePagerAdapter}.
 	 */
-	SectionsPagerAdapter mSectionsPagerAdapter;
 
 	/**
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
 	private Button btnShowLocation;
-	GPSTracker gps;
 
 
 	@SuppressWarnings("deprecation")
@@ -148,42 +143,34 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
 		
-		
 		//this is for the location
 
         mLatitudeText = (TextView) findViewById((R.id.latitude_text));
         mLongitudeText = (TextView) findViewById((R.id.longitude_text));
         myAddress = (TextView) findViewById(R.id.myAddress);
         buildGoogleApiClient();
-        Log.v("LATLANGLALA", Latitude + " " + Longitude);
 
+        if(Location == null) {
+        	Location = ParseUser.getCurrentUser().getString("location");
+        }
+		refresh();
+
+        	//TODO: DELETE BUTTON
 		   btnShowLocation = (Button) findViewById(R.id.show_location);	        
 	        btnShowLocation.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
-					
-					
-	              //  getMyLocationAddress(mLastLocation.getLatitude(),mLastLocation.getLongitude());
-					
-					
-					
-					Intent intent = new Intent(MainActivity.this, GeocodeTest.class);	
-					Latitude = (String) mLatitudeText.getText();
-					Longitude = (String) mLongitudeText.getText();
-					intent.putExtra("lat", Double.valueOf(Latitude));
-					intent.putExtra("long", Double.valueOf(Longitude));
-			        Log.v("LATLANGLALA", Latitude + " " + Longitude);
+					if (Latitude != null && Longitude != null) {
+						//getLocation(Latitude, Longitude);
+			            myAddress.setText(MainActivity.Location);
 
-					startActivity(intent);
-					
-				
+					}
 					
 					
 					
 				}
 			});
-
 		
 		//get user from facebook...
 	    // Fetch Facebook user info if the session is active
@@ -216,43 +203,38 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
             }
         });
 		
-
 		
-		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(ParseConstants.CLASS_MESSAGES);
-		query.whereEqualTo(ParseConstants.KEY_RECIPIENT_IDS, ParseUser.getCurrentUser().getObjectId());
-		try {
-			if(query.find().size() > 0) {
-				Intent intent = new Intent(MainActivity.this, Gesture2Activity.class);
-				startActivity(intent);
-			}
-		} catch (ParseException e) {
-
-		}
 		}
 
 	@Override
 	public void onResume()
 	{
 		super.onResume();
-		refresh();
-        
-
-	
 	}
 
 	public void refresh() {
 
 		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(ParseConstants.CLASS_MESSAGES);
 		query.whereEqualTo(ParseConstants.KEY_RECIPIENT_IDS, ParseUser.getCurrentUser().getObjectId());
-		try {
-			if(query.find().size() > 0) {
-				Intent intent = new Intent(MainActivity.this, Gesture2Activity.class);
-				startActivity(intent);
+		query.findInBackground(new FindCallback<ParseObject>() {
+			@Override
+			public void done(List<ParseObject> message, ParseException e) {		
+				if (e == null) {
+					Intent intent = new Intent(MainActivity.this, Gesture2Activity.class);
+					intent.putExtra("Location", MainActivity.Location);
+					startActivity(intent);
+				}
+				else {
+					Log.e(TAG, e.getMessage());
+					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+					builder.setMessage(e.getMessage())
+						.setTitle(R.string.error_title)
+						.setPositiveButton(android.R.string.ok, null);
+					AlertDialog dialog = builder.create();
+					dialog.show();
+				}
 			}
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		});
 	}
 	
 	
@@ -291,7 +273,104 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 
 	
 	
+	  private void getLocation(double latitude, double longitude) {      
+			String forecastUrl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+ ","+ longitude +"&sensor=true&types=(cities)";
+
+	        if (isNetworkAvailable()) {
+	          //  toggleRefresh();
+
+	            OkHttpClient client = new OkHttpClient();
+	            com.squareup.okhttp.Request request = new  com.squareup.okhttp.Request.Builder()
+	                    .url(forecastUrl)
+	                    .build();
+
+	            Call call = client.newCall(request);
+	            call.enqueue(new Callback() {
+	                @Override
+	                public void onFailure( com.squareup.okhttp.Request request, IOException e) {
+	                    runOnUiThread(new Runnable() {
+	                        @Override
+	                        public void run() {
+	                          //  toggleRefresh();
+	                        }
+	                    });
+	                  //  alertUserAboutError();
+	                }
+
+	                @Override
+	                public void onResponse( com.squareup.okhttp.Response response) throws IOException {
+	                    runOnUiThread(new Runnable() {
+	                        @Override
+	                        public void run() {
+	                      //      toggleRefresh();
+	                        }
+	                    });
+
+	                    try 
+	                    {
+	                        String jsonData = response.body().string();	                        
+	                        JSONObject forecast = new JSONObject(jsonData);
+	                        JSONArray array = forecast.getJSONArray("results");
+	                        //String alamat = array.getJSONObject(0).getString("formatted_address");
+	                        JSONArray x = array.getJSONObject(0).getJSONArray("address_components");
+	                        int size = x.length();
+	                        sb = new StringBuilder();
+	                 
+	                        int i = 0;
+	                        while(i  < size) {
+		                       JSONArray xarr = x.getJSONObject(i).getJSONArray("types");//(name)
+		                       String s = xarr.getString(0);
+		                       if (s.equalsIgnoreCase("country") || s.equalsIgnoreCase("postal_town")) {
+			                       sb.append(x.getJSONObject(i).getString("short_name"));
+			                       sb.append(" ");
+		                       }
+		                       i++;
+	                        }
+	                        
+	                        Log.d("JSONFORMAT", sb.toString());
+	                        //PUT STRING INTO LOCATION
+	                        MainActivity.Location = MainActivity.sb.toString();
+	                        
+
+	                        if (response.isSuccessful()) {
+	                            runOnUiThread(new Runnable() {
+	                                @Override
+	                                public void run() {
+	                                	//updateDisplay();
+	                                }
+	                            });
+	                        } else {
+	                        			//alertUserAboutError();
+	                        }
+	                    }
+	                    catch (IOException e) {
+	                        //Log.e("IOEXCLOC", "Exception caught: ", e);
+	                    } catch (JSONException e) {
+							//e.printStackTrace();
+						}
+	                }
+	            });
+	        }
+	        else {
+	        
+	        }
+	    }
+
+
 	
+	
+
+	 private boolean isNetworkAvailable() {
+	      ConnectivityManager manager = (ConnectivityManager)
+	              getSystemService(Context.CONNECTIVITY_SERVICE);
+	      NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+	      boolean isAvailable = false;
+	      if (networkInfo != null && networkInfo.isConnected()) {
+	          isAvailable = true;
+	      }
+	
+	      return isAvailable;
+	 }
 	
 	 private void makeMeRequest() {
 		    Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),
@@ -347,11 +426,13 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 
 	  @Override
 	  public boolean onTouchEvent(MotionEvent event) {
-	    if (gestureDetector.onTouchEvent(event)) {
-	      return true;
-	    }
-	    return super.onTouchEvent(event);
-	  }
+		    if (gestureDetector.onTouchEvent(event)) {
+		      return true;
+		    }
+		    return super.onTouchEvent(event);
+		  }
+		  
+	  
 
 	  private void onLeftSwipe() {
 	  }
@@ -381,6 +462,13 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		// Perform action on click
 		passingIntent.putExtra("storqm", message);
 		passingIntent.putExtra("storqt", true);
+		
+		if (Location != null) {
+			passingIntent.putExtra("Location", Location);
+		} else {
+			passingIntent.putExtra("Location", ParseUser.getCurrentUser().getString("location"));
+		}
+		
 		startActivity(passingIntent);
 		storqText.setText("");
 	}
@@ -465,12 +553,13 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	        // updates. Gets the best and most recent location currently available, which may be null
 	        // in rare cases when a location is not available.
 	        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
+
 	        if (mLastLocation != null) {
-	        	MainActivity.Latitude = String.valueOf(mLastLocation.getLatitude());
-	        	MainActivity.Longitude = String.valueOf(mLastLocation.getLongitude());
-		        Log.i("LATLANGVAL", Latitude + " " + Longitude);
-	            mLatitudeText.setText(Latitude);
-	            mLongitudeText.setText(Longitude);
+	        	MainActivity.Latitude = mLastLocation.getLatitude();
+	        	MainActivity.Longitude = mLastLocation.getLongitude();
+	            mLatitudeText.setText(String.valueOf(Latitude));
+	            mLongitudeText.setText(String.valueOf(Longitude));
+	            getLocation(Latitude, Longitude);
 	        }
 	        
 	        
@@ -483,9 +572,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	    
 	    @Override
 	    public void onConnectionFailed(ConnectionResult result) {
-	        // Refer to the javadoc for ConnectionResult to see what error codes might be returned in
-	        // onConnectionFailed.
-	        Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
+	       //Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
 	    }
 
 	    /*
@@ -500,10 +587,13 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	    public void onConnectionSuspended(int cause) {
 	        // The connection to Google Play services was lost for some reason. We call connect() to
 	        // attempt to re-establish the connection.
-	        Log.i(TAG, "Connection suspended");
+	        // Log.i(TAG, "Connection suspended");
 	        mGoogleApiClient.connect();
 	    }
   
+	    
+	    
+	    
 	
 	
 }

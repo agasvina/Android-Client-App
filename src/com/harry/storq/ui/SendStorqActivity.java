@@ -28,7 +28,6 @@ import com.parse.SaveCallback;
 
 public class SendStorqActivity extends Activity {
 
-	public static final String TAG = RecipientsActivity.class.getSimpleName();
 
 	protected Uri mMediaUri;
 	protected String mFileType;
@@ -39,6 +38,7 @@ public class SendStorqActivity extends Activity {
 	protected boolean forward;
 	protected String msg;
 	protected String newMsg;
+	protected String Location;
 
 	protected List<ParseUser> mUsers;
 	protected String senders;
@@ -71,7 +71,11 @@ public class SendStorqActivity extends Activity {
 		senders = getIntent().getExtras().getString("contributors");
 		text = getIntent().getBooleanExtra("storqt", false);
 		forward = getIntent().getBooleanExtra("forward", false);
+		Location = getIntent().getStringExtra("Location");
 		
+		if (Location == null) {
+			Location = ParseUser.getCurrentUser().getString("location");
+		}
 		
 		ParseObject message = createMessage();
 		if (message == null) {
@@ -125,8 +129,10 @@ public class SendStorqActivity extends Activity {
 			} else {
 				gender = "NA";
 			}
-			String contributor ="- " +gender + ", " + ParseUser.getCurrentUser().getString("location"); 
-			message.put("contributors", contributor + "~");
+			
+			
+			String contributor ="- " +gender + ", " + Location + "~"; 
+			message.put("contributors", contributor);
 	
 		}
 		

@@ -103,14 +103,20 @@ public class Gesture2Activity extends Activity {
 				} else {
 					gender = "NA";
 				}
-				con +="- " +gender + ", " + ParseUser.getCurrentUser().getString("location") + "~"; 
-			  	deleteSender(dummy);
-
+				
+			  	 String Location = getIntent().getStringExtra("Location");
 			     chaining = new Intent(Gesture2Activity.this, SendStorqActivity.class);
 			     chaining.putExtra("storqm", storq);
 			     chaining.putExtra("storqt", false);
 			     chaining.putExtra("forward", true);
+			     if(Location == null) Location = ParseUser.getCurrentUser().getString("location"); 
+			     
+			     con +="- " +gender + ", " + Location + "~"; 
+				 deleteSender(dummy);
+
+			     
 			     chaining.putExtra("contributors", con);
+			     
 			    
 				text.setText(storq);
 				String []names = (String[]) ParseConstants.parseString(con);
