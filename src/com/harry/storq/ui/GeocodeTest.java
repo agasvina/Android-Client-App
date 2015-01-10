@@ -35,7 +35,12 @@ public class GeocodeTest extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_geocode_test);
 		
+		Latitude = getIntent().getDoubleExtra("lat", 0);
+		Longitude = getIntent().getDoubleExtra("long", 0); 
 		
+		
+        Log.v("LATLANG", Latitude + " " + Longitude);
+
 		
 		test = (TextView) findViewById(R.id.textView1);
 		 getForecast( Latitude,  Longitude);

@@ -107,9 +107,6 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
     protected TextView mLatitudeText;
     protected TextView mLongitudeText;
     protected TextView myAddress;
-
-	
-	
 	
 	protected DialogInterface.OnClickListener mDialogListener = 
 			new DialogInterface.OnClickListener() {
@@ -123,62 +120,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 			}
 		}
 
-		private Uri getOutputMediaFileUri(int mediaType) {
-			// To be safe, you should check that the SDCard is mounted
-		    // using Environment.getExternalStorageState() before doing this.
-			if (isExternalStorageAvailable()) {
-				// get the URI
-				
-				// 1. Get the external storage directory
-				String appName = MainActivity.this.getString(R.string.app_name);
-				File mediaStorageDir = new File(
-						Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-						appName);
-				
-				// 2. Create our subdirectory
-				if (! mediaStorageDir.exists()) {
-					if (! mediaStorageDir.mkdirs()) {
-						return null;
-					}
-				}
-				
-				// 3. Create a file name
-				// 4. Create the file
-				File mediaFile;
-				Date now = new Date();
-				String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(now);
-				
-				String path = mediaStorageDir.getPath() + File.separator;
-				if (mediaType == MEDIA_TYPE_IMAGE) {
-					mediaFile = new File(path + "IMG_" + timestamp + ".jpg");
-				}
-				else if (mediaType == MEDIA_TYPE_VIDEO) {
-					mediaFile = new File(path + "VID_" + timestamp + ".mp4");
-				}
-				else {
-					return null;
-				}
-				
-				Log.d(TAG, "File: " + Uri.fromFile(mediaFile));
-				
-				// 5. Return the file's URI				
-				return Uri.fromFile(mediaFile);
-			}
-			else {
-				return null;
-			}
-		}
 		
-		private boolean isExternalStorageAvailable() {
-			String state = Environment.getExternalStorageState();
-			
-			if (state.equals(Environment.MEDIA_MOUNTED)) {
-				return true;
-			}
-			else {
-				return false;
-			}
-		}
 	};
 
 	/**
@@ -195,7 +137,6 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-
 	private Button btnShowLocation;
 	GPSTracker gps;
 
@@ -213,14 +154,10 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
         mLatitudeText = (TextView) findViewById((R.id.latitude_text));
         mLongitudeText = (TextView) findViewById((R.id.longitude_text));
         myAddress = (TextView) findViewById(R.id.myAddress);
-
         buildGoogleApiClient();
+        Log.v("LATLANGLALA", Latitude + " " + Longitude);
 
-		
-		
-		
-		   btnShowLocation = (Button) findViewById(R.id.show_location);
-	        
+		   btnShowLocation = (Button) findViewById(R.id.show_location);	        
 	        btnShowLocation.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
@@ -231,7 +168,13 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 					
 					
 					
-					Intent intent = new Intent(MainActivity.this, GeocodeTest.class);						
+					Intent intent = new Intent(MainActivity.this, GeocodeTest.class);	
+					Latitude = (String) mLatitudeText.getText();
+					Longitude = (String) mLongitudeText.getText();
+					intent.putExtra("lat", Double.valueOf(Latitude));
+					intent.putExtra("long", Double.valueOf(Longitude));
+			        Log.v("LATLANGLALA", Latitude + " " + Longitude);
+
 					startActivity(intent);
 					
 				
@@ -523,43 +466,18 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	        // in rare cases when a location is not available.
 	        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
 	        if (mLastLocation != null) {
-	        	Latitude = String.valueOf(mLastLocation.getLatitude());
-	        	Longitude = String.valueOf(mLastLocation.getLongitude());
+	        	MainActivity.Latitude = String.valueOf(mLastLocation.getLatitude());
+	        	MainActivity.Longitude = String.valueOf(mLastLocation.getLongitude());
+		        Log.i("LATLANGVAL", Latitude + " " + Longitude);
 	            mLatitudeText.setText(Latitude);
 	            mLongitudeText.setText(Longitude);
-	            getMyLocationAddress(mLastLocation.getLatitude(), mLastLocation.getLongitude() );
 	        }
 	        
 	        
 	    
 	    }
 
-	    
-	    public void getMyLocationAddress(double lat, double longi) {
-	         
-	    	ReverseGeocode test = new ReverseGeocode();
-	    	
-	  //      Geocoder geocoder= new Geocoder(this, Locale.ENGLISH);
-	         
-	        //Place your latitude and longitude
-			  //List<Address> addresses = geocoder.getFromLocation(Double.valueOf(Latitude),Double.valueOf(Longitude), 1);
-			  @SuppressWarnings("static-access")
-			List<Address> add = test.getFromLocation(lat, longi, 1);
-			  
-			  if(add != null) {
-			   
-			      Address fetchedAddress = add.get(0);
-			      String strAddress = fetchedAddress.getLocality();
-
-			    
-			      myAddress.setText("I am at: " +strAddress);
-			   
-			  }
-			   
-			  else
-			      myAddress.setText("No location found..!");
-	    }
-	     
+	   
 	
 	    
 	    
