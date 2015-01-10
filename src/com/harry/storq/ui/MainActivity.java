@@ -1,6 +1,7 @@
 package com.harry.storq.ui;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
@@ -46,6 +49,7 @@ import com.harry.storq.R;
 import com.harry.storq.adapters.SectionsPagerAdapter;
 import com.harry.storq.utils.GPSTracker;
 import com.harry.storq.utils.ParseConstants;
+import com.harry.storq.utils.ReverseGeocode;
 import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
@@ -102,6 +106,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 
     protected TextView mLatitudeText;
     protected TextView mLongitudeText;
+    protected TextView myAddress;
 
 	
 	
@@ -207,6 +212,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 
         mLatitudeText = (TextView) findViewById((R.id.latitude_text));
         mLongitudeText = (TextView) findViewById((R.id.longitude_text));
+        myAddress = (TextView) findViewById(R.id.myAddress);
 
         buildGoogleApiClient();
 
@@ -221,22 +227,17 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 				public void onClick(View v) {
 					
 					
+	              //  getMyLocationAddress(mLastLocation.getLatitude(),mLastLocation.getLongitude());
 					
 					
 					
-					gps = new GPSTracker(MainActivity.this);
+					Intent intent = new Intent(MainActivity.this, GeocodeTest.class);						
+					startActivity(intent);
 					
-					if(gps.canGetLocation()) {
-						double latitude = gps.getLatitude();
-						double longitude = gps.getLongitude();
-						
-						Toast.makeText(
-								getApplicationContext(),
-								"Your Location is -\nLat: " + latitude + "\nLong: "
-										+ longitude, Toast.LENGTH_LONG).show();
-					} else {
-						gps.showSettingsAlert();
-					}
+				
+					
+					
+					
 				}
 			});
 
@@ -345,6 +346,9 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		return super.onOptionsItemSelected(item);
 	}
 
+	
+	
+	
 	
 	 private void makeMeRequest() {
 		    Request request = Request.newMeRequest(ParseFacebookUtils.getSession(),
@@ -523,9 +527,42 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	        	Longitude = String.valueOf(mLastLocation.getLongitude());
 	            mLatitudeText.setText(Latitude);
 	            mLongitudeText.setText(Longitude);
+	            getMyLocationAddress(mLastLocation.getLatitude(), mLastLocation.getLongitude() );
 	        }
+	        
+	        
+	    
 	    }
 
+	    
+	    public void getMyLocationAddress(double lat, double longi) {
+	         
+	    	ReverseGeocode test = new ReverseGeocode();
+	    	
+	  //      Geocoder geocoder= new Geocoder(this, Locale.ENGLISH);
+	         
+	        //Place your latitude and longitude
+			  //List<Address> addresses = geocoder.getFromLocation(Double.valueOf(Latitude),Double.valueOf(Longitude), 1);
+			  @SuppressWarnings("static-access")
+			List<Address> add = test.getFromLocation(lat, longi, 1);
+			  
+			  if(add != null) {
+			   
+			      Address fetchedAddress = add.get(0);
+			      String strAddress = fetchedAddress.getLocality();
+
+			    
+			      myAddress.setText("I am at: " +strAddress);
+			   
+			  }
+			   
+			  else
+			      myAddress.setText("No location found..!");
+	    }
+	     
+	
+	    
+	    
 	    @Override
 	    public void onConnectionFailed(ConnectionResult result) {
 	        // Refer to the javadoc for ConnectionResult to see what error codes might be returned in
