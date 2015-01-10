@@ -24,19 +24,7 @@ public class SignUpActivity extends Activity {
 	protected EditText mEmail;
 	protected Button mSignUpButton;
 	
-	//add spinner...
-	Spinner spnr;
-	  String[] celebrities = {
-	      "Chris Hemsworth",
-	      "Jennifer Lawrence",
-	      "Jessica Alba",
-	      "Brad Pitt",
-	      "Tom Cruise",
-	      "Johnny Depp",
-	      "Megan Fox",
-	      "Paul Walker",
-	      "Vin Diesel"
-	  };
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
