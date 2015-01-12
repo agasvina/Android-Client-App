@@ -948,23 +948,24 @@ containing a value of this type.
         public static final int activity_main=0x7f030003;
         public static final int activity_send_storq=0x7f030004;
         public static final int activity_sign_up=0x7f030005;
-        public static final int com_facebook_friendpickerfragment=0x7f030006;
-        public static final int com_facebook_login_activity_layout=0x7f030007;
-        public static final int com_facebook_picker_activity_circle_row=0x7f030008;
-        public static final int com_facebook_picker_checkbox=0x7f030009;
-        public static final int com_facebook_picker_image=0x7f03000a;
-        public static final int com_facebook_picker_list_row=0x7f03000b;
-        public static final int com_facebook_picker_list_section_header=0x7f03000c;
-        public static final int com_facebook_picker_search_box=0x7f03000d;
-        public static final int com_facebook_picker_title_bar=0x7f03000e;
-        public static final int com_facebook_picker_title_bar_stub=0x7f03000f;
-        public static final int com_facebook_placepickerfragment=0x7f030010;
-        public static final int com_facebook_placepickerfragment_list_row=0x7f030011;
-        public static final int com_facebook_search_bar_layout=0x7f030012;
-        public static final int com_facebook_tooltip_bubble=0x7f030013;
-        public static final int com_facebook_usersettingsfragment=0x7f030014;
-        public static final int message_item=0x7f030015;
-        public static final int user_item=0x7f030016;
+        public static final int activity_splash=0x7f030006;
+        public static final int com_facebook_friendpickerfragment=0x7f030007;
+        public static final int com_facebook_login_activity_layout=0x7f030008;
+        public static final int com_facebook_picker_activity_circle_row=0x7f030009;
+        public static final int com_facebook_picker_checkbox=0x7f03000a;
+        public static final int com_facebook_picker_image=0x7f03000b;
+        public static final int com_facebook_picker_list_row=0x7f03000c;
+        public static final int com_facebook_picker_list_section_header=0x7f03000d;
+        public static final int com_facebook_picker_search_box=0x7f03000e;
+        public static final int com_facebook_picker_title_bar=0x7f03000f;
+        public static final int com_facebook_picker_title_bar_stub=0x7f030010;
+        public static final int com_facebook_placepickerfragment=0x7f030011;
+        public static final int com_facebook_placepickerfragment_list_row=0x7f030012;
+        public static final int com_facebook_search_bar_layout=0x7f030013;
+        public static final int com_facebook_tooltip_bubble=0x7f030014;
+        public static final int com_facebook_usersettingsfragment=0x7f030015;
+        public static final int message_item=0x7f030016;
+        public static final int user_item=0x7f030017;
     }
     public static final class menu {
         public static final int geocode_test=0x7f0c0000;
@@ -976,8 +977,9 @@ containing a value of this type.
         public static final int random=0x7f0c0006;
         public static final int recipients=0x7f0c0007;
         public static final int send_storq=0x7f0c0008;
-        public static final int user_details=0x7f0c0009;
-        public static final int view_text=0x7f0c000a;
+        public static final int splash=0x7f0c0009;
+        public static final int user_details=0x7f0c000a;
+        public static final int view_text=0x7f0c000b;
     }
     public static final class raw {
         public static final int gtm_analytics=0x7f040000;
@@ -1176,6 +1178,7 @@ containing a value of this type.
         public static final int title_activity_recipients=0x7f060063;
         public static final int title_activity_send_storq=0x7f06007b;
         public static final int title_activity_sign_up=0x7f06004a;
+        public static final int title_activity_splash=0x7f060083;
         public static final int title_activity_user_details=0x7f060076;
         public static final int title_activity_view_image=0x7f060069;
         public static final int title_activity_view_text=0x7f060073;

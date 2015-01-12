@@ -8,21 +8,19 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.util.Log;
 import android.view.Window;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import com.harry.storq.R;
 import com.harry.storq.utils.ParseConstants;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.ParseQuery;
-import com.parse.ParseRelation;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
@@ -55,6 +53,13 @@ public class SendStorqActivity extends Activity {
 		ParseQuery<ParseUser> query = ParseUser.getQuery();
 		query.orderByAscending(ParseConstants.KEY_USERNAME);
 		query.setLimit(1000);
+		try {
+			int total = query.count();
+			Log.d("TOTALUSER", total+"");
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		try {
 			List<ParseUser> dummy = query.find();
 			for (ParseUser p: dummy) {

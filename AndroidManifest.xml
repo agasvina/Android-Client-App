@@ -18,12 +18,10 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    
 
     <permission
         android:name="com.example.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
-
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -64,8 +62,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-   
-     
         <activity
             android:name=".ui.FeedbackActivity"
             android:label="@string/title_activity_get" >
@@ -129,8 +125,22 @@
             android:label="@string/title_activity_new_gesture" >
         </activity>
         <activity
-            android:name="com.harry.storq.ui.GeocodeTest"
+            android:name=".ui.GeocodeTest"
             android:label="@string/title_activity_geocode_test" >
+        </activity>
+        
+        <activity
+            android:name=".ui.SignUpActivity"
+            android:label="@string/title_activity_sign_up" >
+        </activity>
+        <activity
+            android:name=".Splash"
+            android:label="@string/title_activity_splash" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

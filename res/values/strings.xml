@@ -87,5 +87,6 @@
     <color name="black">#000000</color>
 
     <string name="title_activity_geocode_test">GeocodeTest</string>
+    <string name="title_activity_splash">Splash</string>
 
 </resources>

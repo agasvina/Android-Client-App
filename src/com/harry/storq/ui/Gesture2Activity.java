@@ -15,7 +15,6 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.harry.storq.R;
@@ -88,7 +87,6 @@ public class Gesture2Activity extends Activity {
 	  
 	  }
 
-
 	public void showStorq() {
 		if (counter > 0) { 
 			  	ParseObject dummy = MapMessages.get(parseObjectId.get(counter-1));
@@ -142,6 +140,10 @@ public class Gesture2Activity extends Activity {
 	  
 	  @Override
 	  public boolean onTouchEvent(MotionEvent event) {
+		  if (event.getAction() == android.view.MotionEvent.ACTION_UP) {
+		      Log.d("TouchTest", "Touch up");
+	    	  showStorq();
+		  }
 	    if (gestureDetector.onTouchEvent(event)) {
 	      return true;
 	    }

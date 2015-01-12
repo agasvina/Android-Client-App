@@ -7,11 +7,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -28,6 +30,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +45,7 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.LocationServices;
 import com.harry.storq.R;
+import com.harry.storq.utils.ColorWheel;
 import com.harry.storq.utils.ParseConstants;
 import com.parse.FindCallback;
 import com.parse.ParseAnalytics;
@@ -83,6 +87,13 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	protected static StringBuilder sb;
 	protected static String Location;
 	
+	
+	//Wallpaper Handling
+	protected RelativeLayout relativLayout;
+	protected int colorCounter = 0;
+	protected int[] colorArray;
+	
+	
 	//Show message automatically...
 	public static List<ParseObject> mMessages;
 	protected SwipeRefreshLayout mSwipeRefreshLayout;
@@ -120,6 +131,11 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		
 	};
 
+	
+	
+	
+	
+	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -136,20 +152,31 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	private Button btnShowLocation;
 
 
-	@SuppressWarnings("deprecation")
+	@SuppressLint("ResourceAsColor") @SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
 		
-		//this is for the location
+		//setting up the wallpaper.
+		relativLayout = (RelativeLayout) findViewById(R.id.pager);
+		relativLayout.setBackgroundColor(Color.parseColor(ColorWheel.mColors[0]));
+		
 
+	//	ColorWheel x = new ColorWheel();
+		
+		
+		
+		//this is for the location
         mLatitudeText = (TextView) findViewById((R.id.latitude_text));
         mLongitudeText = (TextView) findViewById((R.id.longitude_text));
         myAddress = (TextView) findViewById(R.id.myAddress);
         buildGoogleApiClient();
 
+        
+        
+        
         if(Location == null) {
         	Location = ParseUser.getCurrentUser().getString("location");
         }
@@ -435,6 +462,12 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	  
 
 	  private void onLeftSwipe() {
+			if(colorCounter > 8) {
+				colorCounter = 0; 
+			}
+			relativLayout.setBackgroundColor(Color.parseColor(ColorWheel.mColors[colorCounter]));
+			colorCounter++;		
+			
 	  }
 
 	  private void onRightSwipe() {

@@ -13,6 +13,21 @@ import com.parse.PushService;
 
 public class StorqApplication extends Application {
 	
+	
+	public static  String[] color;
+	/*
+	 * Sky Blue: 8ab6ff
+Purple: d38aff
+Pink: ff89b9
+Red: fe8a8a
+White: ffffff
+Orange: fed289
+Green: 90ff89
+Turquoise: 89f8ff
+Yellow: fff38a
+	 * 
+	 * */
+	
 	@Override
 	public void onCreate() { 
 		super.onCreate();
