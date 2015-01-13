@@ -43,12 +43,12 @@
         <item>Send us feedback</item>
     </string-array>
     <string-array name="gender_array">
-        <item>Male</item>
-        <item>Female</item>
+        <item>male</item>
+        <item>female</item>
         <item>Prefer not to say</item>
     </string-array>
 
-    <string name="spinner_title">Gender</string>
+    <string name="spinner_title">select gender</string>
     <string name="video_file_size_warning">The selected video must be less than 10 MB.</string>
     <string name="error_opening_file">There was a problem with the selected file.</string>
     <string name="error_file_size_too_large">The selected file is too large! Select a new file.</string>
@@ -88,5 +88,6 @@
 
     <string name="title_activity_geocode_test">GeocodeTest</string>
     <string name="title_activity_splash">Splash</string>
+    <string name="sending_storq">Sending storq</string>
 
 </resources>

@@ -15,19 +15,7 @@ public class StorqApplication extends Application {
 	
 	
 	public static  String[] color;
-	/*
-	 * Sky Blue: 8ab6ff
-Purple: d38aff
-Pink: ff89b9
-Red: fe8a8a
-White: ffffff
-Orange: fed289
-Green: 90ff89
-Turquoise: 89f8ff
-Yellow: fff38a
-	 * 
-	 * */
-	
+
 	@Override
 	public void onCreate() { 
 		super.onCreate();
@@ -36,7 +24,7 @@ Yellow: fff38a
 	    	"kq2ROIwn7vWNTNqhGuZE635S3fQKGgDKKmhkoj4W", 
 	    	"qzwy4MG2oopzc34Nbq6sY40Mml5OqJ0YzZPv72b3");
 	    
-	    ParseFacebookUtils.initialize(""+R.string.facebook_app_id);
+	    ParseFacebookUtils.initialize("405243752968279");
 
 	    
 	    //PushService.setDefaultPushCallback(this, MainActivity.class);

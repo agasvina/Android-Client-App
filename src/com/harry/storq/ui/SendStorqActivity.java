@@ -9,12 +9,16 @@ import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.view.Window;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.harry.storq.R;
 import com.harry.storq.utils.ParseConstants;
+import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseInstallation;
@@ -43,12 +47,19 @@ public class SendStorqActivity extends Activity {
 	protected ArrayList<String> recipientId;
 
 	
+	//added progress bar.. just in case:
+	protected ProgressBar mProgressBar;
+	protected boolean proceed = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_send_storq);
 		mUsers = new ArrayList<ParseUser>();
+		mProgressBar = (ProgressBar) findViewById(R.id.progressBar1);
+        mProgressBar.setVisibility(View.VISIBLE);
+
 		
 		ParseQuery<ParseUser> query = ParseUser.getQuery();
 		query.orderByAscending(ParseConstants.KEY_USERNAME);
@@ -69,6 +80,9 @@ public class SendStorqActivity extends Activity {
 			//e1.printStackTrace();
 		}
 		
+		
+		
+
 		
 		mMediaUri = getIntent().getData();
 		mFileType = getIntent().getExtras().getString(ParseConstants.KEY_FILE_TYPE);
@@ -93,6 +107,7 @@ public class SendStorqActivity extends Activity {
 			dialog.show();
 		}
 		else {
+	        mProgressBar.setVisibility(View.INVISIBLE);
 			send(message);
 			finish();
 		}

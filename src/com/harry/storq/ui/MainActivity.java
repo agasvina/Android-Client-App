@@ -161,17 +161,16 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		
 		//setting up the wallpaper.
 		relativLayout = (RelativeLayout) findViewById(R.id.pager);
-		relativLayout.setBackgroundColor(Color.parseColor(ColorWheel.mColors[0]));
-		
-
-	//	ColorWheel x = new ColorWheel();
-		
+		relativLayout.setBackgroundColor(Color.parseColor(ColorWheel.mColors[0]));		
 		
 		
 		//this is for the location
         mLatitudeText = (TextView) findViewById((R.id.latitude_text));
         mLongitudeText = (TextView) findViewById((R.id.longitude_text));
         myAddress = (TextView) findViewById(R.id.myAddress);
+        mLatitudeText.setVisibility(View.INVISIBLE);
+        mLongitudeText.setVisibility(View.INVISIBLE);
+        myAddress.setVisibility(View.INVISIBLE);
         buildGoogleApiClient();
 
         
@@ -180,24 +179,8 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
         if(Location == null) {
         	Location = ParseUser.getCurrentUser().getString("location");
         }
-		refresh();
 
-        	//TODO: DELETE BUTTON
-		   btnShowLocation = (Button) findViewById(R.id.show_location);	        
-	        btnShowLocation.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					if (Latitude != null && Longitude != null) {
-						//getLocation(Latitude, Longitude);
-			            myAddress.setText(MainActivity.Location);
-
-					}
-					
-					
-					
-				}
-			});
+        
 		
 		//get user from facebook...
 	    // Fetch Facebook user info if the session is active
@@ -213,10 +196,17 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		if (currentUser == null) {
 			navigateToLogin();
 		}
-		else {
-			Log.i(TAG, currentUser.getUsername());
+		else if (!currentUser.getBoolean("usingFB") && !currentUser.getBoolean("emailVerified"))
+		{
+			navigateToLogin();
+		} else {
+			
 		}
-	    	
+	    
+		
+		refresh();
+
+		
 		//Gesture Activity
 		gestureDetector = new GestureDetector(
                 new SwipeGestureDetector());		
@@ -429,6 +419,8 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 
 		              // Save the user profile info in a user property
 		              currentUser.put("profile", userProfile);
+		              currentUser.put("usingFB", true);
+		              currentUser.put("wallpaper","#ffffff");
 		              currentUser.put(ParseConstants.KEY_USERNAME, user.getName());
 		              currentUser.saveInBackground();
 
@@ -466,6 +458,8 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 				colorCounter = 0; 
 			}
 			relativLayout.setBackgroundColor(Color.parseColor(ColorWheel.mColors[colorCounter]));
+			ParseUser.getCurrentUser().put("wallpaper", ColorWheel.mColors[colorCounter]);
+			ParseUser.getCurrentUser().saveInBackground();
 			colorCounter++;		
 			
 	  }

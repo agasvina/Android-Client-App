@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
-    
 
     <EditText
         android:id="@+id/editText"
@@ -29,21 +28,10 @@
         android:layout_marginRight="29dp"
         android:text="Send" />
 
-    <Button
-        android:id="@+id/show_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/getTextButton"
-        android:layout_alignBottom="@+id/getTextButton"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="47dp"
-        android:text="Button" />
-
     <TextView
         android:id="@+id/latitude_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/show_location"
         android:layout_below="@+id/editText"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="38dp"

@@ -99,7 +99,10 @@
     </style>
     
     <style name="AuthBackground">
-        <item name="android:background">@drawable/background_fill</item>
+        <item name="android:background">@android:color/white</item>
+        <item name="android:textColor">@android:color/black</item>
+        
+        
     </style>
 
     <style name="AuthBackgroundImage">
@@ -173,14 +176,21 @@
     </style>
     
     
-        <style name="AuthSpinner" parent="android:Widget.Holo.Light.Spinner">
-                 <item name="android:textColor">@color/black</item>
-                    <item name="android:textColorHint">@color/black</item>
-                 
+        <style name="AuthSpinner" parent="android:Widget.Holo.Spinner">
+        <item name="android:textColorHint">@color/light_gray</item>            
         <item name="android:textSize">17sp</item>        
         <item name="android:layout_width">match_parent</item>  
         <item name="android:layout_height">wrap_content</item>  
     </style>
+    
+         <style name="Theme.splash" parent="@android:style/Theme.Holo.Light.NoActionBar">
+              <item name="android:background">@drawable/background_login</item>
+         </style>
+         
+         <style name="Theme.main" parent="@android:style/Theme.Holo.Light"></style>
+    
+        
+    
 </resources>
 
 

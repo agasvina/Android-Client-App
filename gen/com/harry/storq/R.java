@@ -749,7 +749,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f020034;
         public static final int com_facebook_loginbutton_silver=0x7f020035;
         public static final int com_facebook_logo=0x7f020036;
-        public static final int com_facebook_picker_default_separator_color=0x7f020091;
+        public static final int com_facebook_picker_default_separator_color=0x7f020092;
         public static final int com_facebook_picker_item_background=0x7f020037;
         public static final int com_facebook_picker_list_focused=0x7f020038;
         public static final int com_facebook_picker_list_longpressed=0x7f020039;
@@ -827,19 +827,20 @@ containing a value of this type.
         public static final int progress_horizontal_ribbit=0x7f020081;
         public static final int progress_primary_ribbit=0x7f020082;
         public static final int progress_secondary_ribbit=0x7f020083;
-        public static final int selectable_background_ribbit=0x7f020084;
-        public static final int spinner_ab_default_ribbit=0x7f020085;
-        public static final int spinner_ab_disabled_ribbit=0x7f020086;
-        public static final int spinner_ab_focused_ribbit=0x7f020087;
-        public static final int spinner_ab_pressed_ribbit=0x7f020088;
-        public static final int spinner_background_ab_ribbit=0x7f020089;
-        public static final int tab_indicator_ab_ribbit=0x7f02008a;
-        public static final int tab_selected_focused_ribbit=0x7f02008b;
-        public static final int tab_selected_pressed_ribbit=0x7f02008c;
-        public static final int tab_selected_ribbit=0x7f02008d;
-        public static final int tab_unselected_focused_ribbit=0x7f02008e;
-        public static final int tab_unselected_pressed_ribbit=0x7f02008f;
-        public static final int tab_unselected_ribbit=0x7f020090;
+        public static final int refresh=0x7f020084;
+        public static final int selectable_background_ribbit=0x7f020085;
+        public static final int spinner_ab_default_ribbit=0x7f020086;
+        public static final int spinner_ab_disabled_ribbit=0x7f020087;
+        public static final int spinner_ab_focused_ribbit=0x7f020088;
+        public static final int spinner_ab_pressed_ribbit=0x7f020089;
+        public static final int spinner_background_ab_ribbit=0x7f02008a;
+        public static final int tab_indicator_ab_ribbit=0x7f02008b;
+        public static final int tab_selected_focused_ribbit=0x7f02008c;
+        public static final int tab_selected_pressed_ribbit=0x7f02008d;
+        public static final int tab_selected_ribbit=0x7f02008e;
+        public static final int tab_unselected_focused_ribbit=0x7f02008f;
+        public static final int tab_unselected_pressed_ribbit=0x7f020090;
+        public static final int tab_unselected_ribbit=0x7f020091;
     }
     public static final class id {
         public static final int action_logout=0x7f07005c;
@@ -889,7 +890,7 @@ containing a value of this type.
         public static final int donate_with_google=0x7f070013;
         public static final int editText=0x7f070028;
         public static final int editTextLayout=0x7f07002c;
-        public static final int emailField=0x7f070036;
+        public static final int emailField=0x7f070037;
         public static final int getTextButton=0x7f070029;
         public static final int grayscale=0x7f070015;
         public static final int holo_dark=0x7f070007;
@@ -897,14 +898,14 @@ containing a value of this type.
         public static final int hybrid=0x7f070006;
         public static final int inline=0x7f07001d;
         public static final int large=0x7f070018;
-        public static final int latitude_text=0x7f070033;
+        public static final int latitude_text=0x7f070032;
         public static final int left=0x7f070020;
         public static final int loginButton=0x7f07002f;
-        public static final int longitude_text=0x7f070034;
+        public static final int longitude_text=0x7f070033;
         public static final int match_parent=0x7f07000e;
         public static final int messageIcon=0x7f070055;
         public static final int monochrome=0x7f070016;
-        public static final int myAddress=0x7f070035;
+        public static final int myAddress=0x7f070034;
         public static final int nameLabel=0x7f07005a;
         public static final int none=0x7f070000;
         public static final int normal=0x7f070003;
@@ -912,16 +913,16 @@ containing a value of this type.
         public static final int passwordField=0x7f07002e;
         public static final int picker_subtitle=0x7f07004a;
         public static final int production=0x7f070009;
+        public static final int progressBar1=0x7f070035;
         public static final int right=0x7f070021;
         public static final int sandbox=0x7f07000a;
         public static final int satellite=0x7f070004;
         public static final int selectionDetails=0x7f07000d;
         public static final int senderLabel=0x7f070056;
-        public static final int show_location=0x7f070032;
         public static final int signUpText=0x7f070030;
-        public static final int signupButton=0x7f070037;
+        public static final int signupButton=0x7f070038;
         public static final int small=0x7f070017;
-        public static final int spinner=0x7f070038;
+        public static final int spinner=0x7f070036;
         public static final int standard=0x7f070019;
         public static final int strict_sandbox=0x7f07000b;
         public static final int subtitle=0x7f07002b;
@@ -1158,6 +1159,7 @@ containing a value of this type.
         public static final int password_hint=0x7f060047;
         public static final int push_message=0x7f060071;
         public static final int searching_storq=0x7f060081;
+        public static final int sending_storq=0x7f060084;
         public static final int sign_up_button_label=0x7f06004c;
         public static final int sign_up_text=0x7f060049;
         public static final int signup_error_message=0x7f06004d;
@@ -1210,7 +1212,7 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f05001f;
+        public static final int AppBaseTheme=0x7f050021;
         public static final int AuthBackground=0x7f050016;
         public static final int AuthBackgroundImage=0x7f050017;
         public static final int AuthButton=0x7f05001c;
@@ -1232,6 +1234,8 @@ containing a value of this type.
         /**  this style is only referenced in a Light.DarkActionBar based theme 
          */
         public static final int Theme_Ribbit_Widget=0x7f050015;
+        public static final int Theme_main=0x7f050020;
+        public static final int Theme_splash=0x7f05001f;
         public static final int WalletFragmentDefaultButtonTextAppearance=0x7f050003;
         public static final int WalletFragmentDefaultDetailsHeaderTextAppearance=0x7f050002;
         public static final int WalletFragmentDefaultDetailsTextAppearance=0x7f050001;
