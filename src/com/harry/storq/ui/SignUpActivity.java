@@ -119,7 +119,6 @@ public class SignUpActivity extends Activity implements OnItemSelectedListener {
 	@Override
 	public void onItemSelected(AdapterView<?> adapter, View arg1, int pos,
 			long arg3) {
-		// TODO Auto-generated method stub
         gender= adapter.getItemAtPosition(pos).toString();
 		
 		
@@ -128,8 +127,6 @@ public class SignUpActivity extends Activity implements OnItemSelectedListener {
 
 
 	@Override
-	public void onNothingSelected(AdapterView<?> adapter) {
-		// TODO Auto-generated method stub
-		// ((TextView) adapter.getChildAt(0)).setTextColor(Color.BLACK);	
+	public void onNothingSelected(AdapterView<?> adapter) {	
 		}
 }

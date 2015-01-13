@@ -33,7 +33,6 @@ public class SendStorqActivity extends Activity {
 
 	protected Uri mMediaUri;
 	protected String mFileType;
-	protected GridView mGridView;
 	
 	//for sending text message
 	protected boolean text;
@@ -41,6 +40,7 @@ public class SendStorqActivity extends Activity {
 	protected String msg;
 	protected String newMsg;
 	protected String Location;
+	protected int total = 1;
 
 	protected List<ParseUser> mUsers;
 	protected String senders;
@@ -60,13 +60,24 @@ public class SendStorqActivity extends Activity {
 		mProgressBar = (ProgressBar) findViewById(R.id.progressBar1);
         mProgressBar.setVisibility(View.VISIBLE);
 
-		
+        Random random = new Random();
+        
+        //getting the recipient ID
 		ParseQuery<ParseUser> query = ParseUser.getQuery();
-		query.orderByAscending(ParseConstants.KEY_USERNAME);
+		query.whereNotEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
 		query.setLimit(1000);
+		int totalSkip = 1;
 		try {
-			int total = query.count();
-			Log.d("TOTALUSER", total+"");
+			 this.total = query.count();
+			 if(total > 1000) {
+				 totalSkip = (this.total-1000)/100;
+				 if (totalSkip > 0)  {
+					 totalSkip = random.nextInt(totalSkip) -1;
+				 } else {
+					 totalSkip = 0;
+				 }
+				 query.setSkip(totalSkip*100);
+			 }
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

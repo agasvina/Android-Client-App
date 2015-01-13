@@ -1,5 +1,6 @@
 package com.harry.storq.ui;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.os.Bundle;
@@ -25,6 +26,8 @@ public class FeedbackActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_get);
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
 	}
 
 	@Override
@@ -32,7 +35,6 @@ public class FeedbackActivity extends Activity {
 		Button button = (Button) findViewById(R.id.getTextButton);
 		button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                // Perform action on click
             	EditText editText = (EditText) findViewById(R.id.editText);
         	    String feeds = editText.getText().toString();
         	    ParseObject message = new ParseObject(ParseConstants.CLASS_FEEDBACK);
@@ -44,7 +46,6 @@ public class FeedbackActivity extends Activity {
         			@Override
         			public void done(ParseException e) {
         				if (e == null) {
-        					// success!
         					Toast.makeText(FeedbackActivity.this, R.string.feedback_respond, Toast.LENGTH_LONG).show();
         				}
         				else {

@@ -161,7 +161,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		
 		//setting up the wallpaper.
 		relativLayout = (RelativeLayout) findViewById(R.id.pager);
-		relativLayout.setBackgroundColor(Color.parseColor(ColorWheel.mColors[0]));		
+		relativLayout.setBackgroundColor(Color.parseColor(ParseUser.getCurrentUser().getString("wallpaper")));		
 		
 		
 		//this is for the location
@@ -171,11 +171,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
         mLatitudeText.setVisibility(View.INVISIBLE);
         mLongitudeText.setVisibility(View.INVISIBLE);
         myAddress.setVisibility(View.INVISIBLE);
-        buildGoogleApiClient();
-
-        
-        
-        
+        buildGoogleApiClient();      
         if(Location == null) {
         	Location = ParseUser.getCurrentUser().getString("location");
         }
@@ -187,8 +183,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	    Session session = ParseFacebookUtils.getSession();
 	    if (session != null && session.isOpened()) {
 	      makeMeRequest();
-	    }
-		
+	    }		
 		
 		ParseAnalytics.trackAppOpened(getIntent());
 		
@@ -205,12 +200,10 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	    
 		
 		refresh();
-
 		
 		//Gesture Activity
 		gestureDetector = new GestureDetector(
                 new SwipeGestureDetector());		
-		
 		
 		//Binding the text edit and button to the appropriate android object
 		Button button = (Button) findViewById(R.id.getTextButton);
@@ -294,7 +287,6 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 			String forecastUrl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+ ","+ longitude +"&sensor=true&types=(cities)";
 
 	        if (isNetworkAvailable()) {
-	          //  toggleRefresh();
 
 	            OkHttpClient client = new OkHttpClient();
 	            com.squareup.okhttp.Request request = new  com.squareup.okhttp.Request.Builder()
@@ -308,34 +300,24 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	                    runOnUiThread(new Runnable() {
 	                        @Override
 	                        public void run() {
-	                          //  toggleRefresh();
 	                        }
 	                    });
-	                  //  alertUserAboutError();
 	                }
 
 	                @Override
 	                public void onResponse( com.squareup.okhttp.Response response) throws IOException {
-	                    runOnUiThread(new Runnable() {
-	                        @Override
-	                        public void run() {
-	                      //      toggleRefresh();
-	                        }
-	                    });
-
 	                    try 
 	                    {
 	                        String jsonData = response.body().string();	                        
 	                        JSONObject forecast = new JSONObject(jsonData);
 	                        JSONArray array = forecast.getJSONArray("results");
-	                        //String alamat = array.getJSONObject(0).getString("formatted_address");
 	                        JSONArray x = array.getJSONObject(0).getJSONArray("address_components");
 	                        int size = x.length();
 	                        sb = new StringBuilder();
 	                 
 	                        int i = 0;
 	                        while(i  < size) {
-		                       JSONArray xarr = x.getJSONObject(i).getJSONArray("types");//(name)
+		                       JSONArray xarr = x.getJSONObject(i).getJSONArray("types");
 		                       String s = xarr.getString(0);
 		                       if (s.equalsIgnoreCase("country") || s.equalsIgnoreCase("postal_town")) {
 			                       sb.append(x.getJSONObject(i).getString("short_name"));
@@ -345,25 +327,16 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	                        }
 	                        
 	                        Log.d("JSONFORMAT", sb.toString());
-	                        //PUT STRING INTO LOCATION
 	                        MainActivity.Location = MainActivity.sb.toString();
 	                        
 
 	                        if (response.isSuccessful()) {
-	                            runOnUiThread(new Runnable() {
-	                                @Override
-	                                public void run() {
-	                                	//updateDisplay();
-	                                }
-	                            });
+		                        MainActivity.Location = MainActivity.sb.toString();
 	                        } else {
-	                        			//alertUserAboutError();
 	                        }
 	                    }
 	                    catch (IOException e) {
-	                        //Log.e("IOEXCLOC", "Exception caught: ", e);
 	                    } catch (JSONException e) {
-							//e.printStackTrace();
 						}
 	                }
 	            });
@@ -599,22 +572,13 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	    
 	    @Override
 	    public void onConnectionFailed(ConnectionResult result) {
-	       //Log.i(TAG, "Connection failed: ConnectionResult.getErrorCode() = " + result.getErrorCode());
 	    }
 
-	    /*
-	    * Called by Google Play services if the connection to GoogleApiClient drops because of an
-	    * error.
-	    */
 	    public void onDisconnected() {
-	        Log.i(TAG, "Disconnected");
 	    }
 
 	    @Override
 	    public void onConnectionSuspended(int cause) {
-	        // The connection to Google Play services was lost for some reason. We call connect() to
-	        // attempt to re-establish the connection.
-	        // Log.i(TAG, "Connection suspended");
 	        mGoogleApiClient.connect();
 	    }
   

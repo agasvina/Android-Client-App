@@ -92,6 +92,7 @@ public class Gesture2Activity extends Activity {
 			  	ParseObject dummy = MapMessages.get(parseObjectId.get(counter-1));
 			  	String storq = dummy.getString("storq");
 			  	String con = dummy.getString("contributors");
+			  	
 			  	//Get location and gender...
 			  	String gender = ParseUser.getCurrentUser().getString("gender");
 				if(gender.equals("female")) {
@@ -107,8 +108,7 @@ public class Gesture2Activity extends Activity {
 			     chaining.putExtra("storqm", storq);
 			     chaining.putExtra("storqt", false);
 			     chaining.putExtra("forward", true);
-			     if(Location == null) Location = ParseUser.getCurrentUser().getString("location"); 
-			     
+			     if(Location == null) Location = ParseUser.getCurrentUser().getString("location"); 		     
 			     con +="- " +gender + ", " + Location + "~"; 
 				 deleteSender(dummy);
 
@@ -128,8 +128,7 @@ public class Gesture2Activity extends Activity {
 					text2.setText(names[1]);
 				} else {
 					text1.setText(names[0]);
-				}
-				
+				}	
 					text4.setText(""+ names.length + " chains");	
 				counter--;
 		  } else {

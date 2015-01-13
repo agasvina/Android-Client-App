@@ -106,7 +106,7 @@
     </style>
 
     <style name="AuthBackgroundImage">
-        <item name="android:scaleType">fitStart</item>
+        <item name="android:scaleType">fitXY</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_alignParentLeft">true</item>

@@ -29,7 +29,6 @@ public class LoginActivity extends Activity {
 	protected EditText mUsername;
 	protected EditText mPassword;
 	protected Button mLoginButton;
-	  private Dialog progressDialog;
 
 	
 	protected TextView mSignUpTextView;
@@ -40,8 +39,6 @@ public class LoginActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_login);
 	    ParseFacebookUtils.initialize("405243752968279");
-
-		
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
 
@@ -85,9 +82,7 @@ public class LoginActivity extends Activity {
 							setProgressBarIndeterminateVisibility(false);
 							
 							if (e == null) {
-								// Success!
-								StorqApplication.updateParseInstallation(user);
-								
+								StorqApplication.updateParseInstallation(user);								
 								Intent intent = new Intent(LoginActivity.this, MainActivity.class);
 								intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 								intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -118,23 +113,16 @@ public class LoginActivity extends Activity {
 	  }
 
 	  public void onLoginClick(View v) {
-	//    progressDialog = ProgressDialog.show(LoginActivity.this, "", "Logging in...", true);
 	    
 	    List<String> permissions = Arrays.asList("public_profile", "email","user_location");
-	    // NOTE: for extended permissions, like "user_about_me", your app must be reviewed by the Facebook team
-	    // (https://developers.facebook.com/docs/facebook-login/permissions/)
-	    
+	  
 	    ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
 	      @Override
 	      public void done(ParseUser user, ParseException err) {
-	 //       progressDialog.dismiss();
 	        if (user == null) {
-	         // Log.d(IntegratingFacebookTutorialApplication.TAG, "Uh oh. The user cancelled the Facebook login.");
 	        } else if (user.isNew()) {
-	         // Log.d(IntegratingFacebookTutorialApplication.TAG, "User signed up and logged in through Facebook!");
 	          showUserDetailsActivity();
 	        } else {
-	        //  Log.d(IntegratingFacebookTutorialApplication.TAG, "User logged in through Facebook!");
 	          showUserDetailsActivity();
 	        }
 	      }
