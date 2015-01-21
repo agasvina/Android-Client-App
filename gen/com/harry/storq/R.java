@@ -987,6 +987,7 @@ containing a value of this type.
         public static final int action_settings=0x7f060041;
         public static final int app_id=0x7f060077;
         public static final int app_name=0x7f060040;
+        public static final int bad_words_msg=0x7f060085;
         public static final int cancel_button_label=0x7f06006c;
         public static final int com_facebook_choose_friends=0x7f060034;
         public static final int com_facebook_dialogloginactivity_ok_button=0x7f060023;

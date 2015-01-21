@@ -89,5 +89,6 @@
     <string name="title_activity_geocode_test">GeocodeTest</string>
     <string name="title_activity_splash">Splash</string>
     <string name="sending_storq">Sending storq</string>
+    <string name="bad_words_msg">Message contains bad words.. Unable to send</string>
 
 </resources>

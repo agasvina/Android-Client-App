@@ -190,10 +190,10 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		if (currentUser == null) {
 			navigateToLogin();
-		}
-		else if (!currentUser.getBoolean("usingFB") && !currentUser.getBoolean("emailVerified"))
-		{
-			navigateToLogin();
+//		}
+//		else if ( session == null && !currentUser.getBoolean("emailVerified"))
+//		{
+//			navigateToLogin();
 		} else {
 			
 		}
@@ -209,7 +209,10 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		Button button = (Button) findViewById(R.id.getTextButton);
 		button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	sendMessage();
+            	storqText = (EditText) findViewById(R.id.editText);
+    			message = storqText.getText().toString();
+    		    checkMessage(message);
+    		    getLocation( 15,67);
             }
         });
 		
@@ -308,7 +311,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	                public void onResponse( com.squareup.okhttp.Response response) throws IOException {
 	                    try 
 	                    {
-	                        String jsonData = response.body().string();	                        
+	                        String jsonData = response.body().string();	 
 	                        JSONObject forecast = new JSONObject(jsonData);
 	                        JSONArray array = forecast.getJSONArray("results");
 	                        JSONArray x = array.getJSONObject(0).getJSONArray("address_components");
@@ -347,7 +350,91 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	    }
 
 
-	
+	private void checkMessage(String Message) {     
+		    
+			String forecastUrl = "http://www.wdyl.com/profanity?q="+"\"" + Message+ "\"";
+			 Log.d("FUCK", forecastUrl);
+
+	        if (isNetworkAvailable()) {
+
+	            OkHttpClient client = new OkHttpClient();
+	            com.squareup.okhttp.Request request = new  com.squareup.okhttp.Request.Builder()
+	                    .url(forecastUrl)
+	                    .build();
+
+	            Call call = client.newCall(request);
+	            call.enqueue(new Callback() {
+	                @Override
+	                public void onFailure( com.squareup.okhttp.Request request, IOException e) {
+	                    runOnUiThread(new Runnable() {
+	                        @Override
+	                        public void run() {
+	                        }
+	                    });
+	                }
+
+	                @Override
+	                public void onResponse( com.squareup.okhttp.Response response) throws IOException {
+	                    try 
+	                    {
+	                        String jsonData = response.body().string();	                        
+	                        JSONObject object = new JSONObject(jsonData);
+	                        String msg = object.getString("response");
+	                        Log.d("FUCK", jsonData);
+	                        sendMessage();
+	                        
+	                        if (response.isSuccessful()) {
+		                        Log.d("FUCK", jsonData);
+
+//		                        if(msg) {
+//		                        	//TODO:  Message contains bad words..
+//		                        	 runOnUiThread(new Runnable() {
+//		     	                        @Override
+//		     	                        public void run() {
+//				                			Toast.makeText(MainActivity.this,R.string.bad_words_msg, Toast.LENGTH_SHORT).show();
+//		     	                        }
+//		     	                    });
+//
+//		                        } else {
+//		                        	//Message is being send. 
+//		                        	 runOnUiThread(new Runnable() {
+//			     	                        @Override
+//			     	                        public void run() {
+//			     	                 		  sendMessage();
+//			     	                        }
+//			     	                    });
+		                        	
+		                        	
+		                       // }
+	                        	
+	                        	
+	                        } else {
+	                        }
+	                    }
+	                    catch (IOException e) {
+	                    	 Log.d("FUCK", e.toString());
+	                    	 e.printStackTrace();
+	                    } catch (JSONException e) {
+	                    	 //Log.d("FUCK", jsonData);
+	                    	 e.printStackTrace();
+
+						}
+	                }
+	            });
+	        }
+	        else {
+	        
+	        	try {
+	        		
+	        	}catch (Exception e) {
+	        		
+	        	}
+	        }
+	    }
+
+	  
+	  
+	  
 	
 
 	 private boolean isNetworkAvailable() {
@@ -373,6 +460,9 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		            try {
 		              userProfile.put("facebookId", user.getId());
 		              userProfile.put("name", user.getName());
+		              currentUser.put(ParseConstants.KEY_USERNAME, user.getName());
+		              currentUser.put("usingFB", true);
+		              currentUser.put("wallpaper","#ffffff");
 		              if (user.getProperty("gender") != null) {
 		                userProfile.put("gender", user.getProperty("gender"));
 		            	currentUser.put("gender", user.getProperty("gender"));
@@ -392,11 +482,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 
 		              // Save the user profile info in a user property
 		              currentUser.put("profile", userProfile);
-		              currentUser.put("usingFB", true);
-		              currentUser.put("wallpaper","#ffffff");
-		              currentUser.put(ParseConstants.KEY_USERNAME, user.getName());
 		              currentUser.saveInBackground();
-
 		            
 		            } catch (JSONException e) {
 		            	//ERROR PARSING RETURN DATA
@@ -444,7 +530,12 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	  }
 	  
 	  private void onUpSwipe() {
-		  sendMessage();
+
+		  //sendMessage();
+		  //Check and send message if appropriate
+			storqText = (EditText) findViewById(R.id.editText);
+			message = storqText.getText().toString();
+		    checkMessage(message);
 	  }
 	  
 

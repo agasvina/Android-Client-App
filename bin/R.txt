@@ -434,6 +434,7 @@ int string accept 0x7f060002
 int string action_settings 0x7f060041
 int string app_id 0x7f060077
 int string app_name 0x7f060040
+int string bad_words_msg 0x7f060085
 int string cancel_button_label 0x7f06006c
 int string com_facebook_choose_friends 0x7f060034
 int string com_facebook_dialogloginactivity_ok_button 0x7f060023
