@@ -158,11 +158,36 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
+        
+	    Session session = ParseFacebookUtils.getSession();
+	    if (session != null && session.isOpened()) {
+	      makeMeRequest();
+	    }
+		
+		
+
+        
+		
+		//get user from facebook...
+	    // Fetch Facebook user info if the session is active
+	    ParseAnalytics.trackAppOpened(getIntent());
+		
+		ParseUser currentUser = ParseUser.getCurrentUser();
+		if (currentUser == null) {
+			navigateToLogin();
+		}
+		else {
+			Log.i(TAG, currentUser.getUsername());
+		}
+		
 		
 		//setting up the wallpaper.
 		relativLayout = (RelativeLayout) findViewById(R.id.pager);
-		relativLayout.setBackgroundColor(Color.parseColor(ParseUser.getCurrentUser().getString("wallpaper")));		
-		
+		if(ParseUser.getCurrentUser().getString("wallpaper") != null) {
+			relativLayout.setBackgroundColor(Color.parseColor(ParseUser.getCurrentUser().getString("wallpaper")));		
+		} else {
+			relativLayout.setBackgroundColor(Color.parseColor("#ffffff"));		
+		}
 		
 		//this is for the location
         mLatitudeText = (TextView) findViewById((R.id.latitude_text));
@@ -176,27 +201,6 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
         	Location = ParseUser.getCurrentUser().getString("location");
         }
 
-        
-		
-		//get user from facebook...
-	    // Fetch Facebook user info if the session is active
-	    Session session = ParseFacebookUtils.getSession();
-	    if (session != null && session.isOpened()) {
-	      makeMeRequest();
-	    }		
-		
-		ParseAnalytics.trackAppOpened(getIntent());
-		
-		ParseUser currentUser = ParseUser.getCurrentUser();
-		if (currentUser == null) {
-			navigateToLogin();
-//		}
-//		else if ( session == null && !currentUser.getBoolean("emailVerified"))
-//		{
-//			navigateToLogin();
-		} else {
-			
-		}
 	    
 		
 		refresh();
@@ -211,8 +215,9 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
             public void onClick(View v) {
             	storqText = (EditText) findViewById(R.id.editText);
     			message = storqText.getText().toString();
+	            getLocation(Latitude, Longitude);
     		    checkMessage(message);
-    		    getLocation( 15,67);
+
             }
         });
 		
@@ -289,6 +294,8 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	  private void getLocation(double latitude, double longitude) {      
 			String forecastUrl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+ ","+ longitude +"&sensor=true&types=(cities)";
 
+            Log.d("JSONFORMAT", forecastUrl);
+
 	        if (isNetworkAvailable()) {
 
 	            OkHttpClient client = new OkHttpClient();
@@ -351,71 +358,53 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 
 
 	private void checkMessage(String Message) {     
-		    
-			String forecastUrl = "http://www.wdyl.com/profanity?q="+"\"" + Message+ "\"";
-			 Log.d("FUCK", forecastUrl);
+		    	String newMsg = Message.replaceAll(" ", "%20");
+				//String profanity = "http://www.wdyl.com/profanity?q="+ "%27" + newMsg+  "%27";
+				String profanity = "http://www.purgomalum.com/service/json?text=" + newMsg;
 
 	        if (isNetworkAvailable()) {
 
+				 Log.d("JSONFORMAT", "Network Availabe...");
+
 	            OkHttpClient client = new OkHttpClient();
 	            com.squareup.okhttp.Request request = new  com.squareup.okhttp.Request.Builder()
-	                    .url(forecastUrl)
+	                    .url(profanity)
 	                    .build();
 
 	            Call call = client.newCall(request);
 	            call.enqueue(new Callback() {
 	                @Override
 	                public void onFailure( com.squareup.okhttp.Request request, IOException e) {
-	                    runOnUiThread(new Runnable() {
-	                        @Override
-	                        public void run() {
-	                        }
-	                    });
+	         
+                        Log.d("JSONFORMAT", "no response");            
 	                }
 
 	                @Override
 	                public void onResponse( com.squareup.okhttp.Response response) throws IOException {
 	                    try 
 	                    {
-	                        String jsonData = response.body().string();	                        
+	                        String jsonData = response.body().string();	
+	                        Log.d("JSONFORMAT", jsonData);
+
 	                        JSONObject object = new JSONObject(jsonData);
-	                        String msg = object.getString("response");
-	                        Log.d("FUCK", jsonData);
-	                        sendMessage();
+	                        String msg = object.getString("result");
+	                        
+	                        message = msg;
+	                        runOnUiThread(new Runnable() {
+     	                        @Override
+     	                        public void run() {
+     		                        sendMessage(message);
+     	                        }
+    	                    });
 	                        
 	                        if (response.isSuccessful()) {
-		                        Log.d("FUCK", jsonData);
-
-//		                        if(msg) {
-//		                        	//TODO:  Message contains bad words..
-//		                        	 runOnUiThread(new Runnable() {
-//		     	                        @Override
-//		     	                        public void run() {
-//				                			Toast.makeText(MainActivity.this,R.string.bad_words_msg, Toast.LENGTH_SHORT).show();
-//		     	                        }
-//		     	                    });
-//
-//		                        } else {
-//		                        	//Message is being send. 
-//		                        	 runOnUiThread(new Runnable() {
-//			     	                        @Override
-//			     	                        public void run() {
-//			     	                 		  sendMessage();
-//			     	                        }
-//			     	                    });
-		                        	
-		                        	
-		                       // }
-	                        	
 	                        	
 	                        } else {
 	                        }
 	                    }
 	                    catch (IOException e) {
-	                    	 Log.d("FUCK", e.toString());
 	                    	 e.printStackTrace();
 	                    } catch (JSONException e) {
-	                    	 //Log.d("FUCK", jsonData);
 	                    	 e.printStackTrace();
 
 						}
@@ -530,9 +519,6 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	  }
 	  
 	  private void onUpSwipe() {
-
-		  //sendMessage();
-		  //Check and send message if appropriate
 			storqText = (EditText) findViewById(R.id.editText);
 			message = storqText.getText().toString();
 		    checkMessage(message);
@@ -546,10 +532,9 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	  }
 	  
 
-	  public void sendMessage() {
+	  public void sendMessage(String msg) {
 		passingIntent= new Intent(MainActivity.this, SendStorqActivity.class);
-		storqText = (EditText) findViewById(R.id.editText);
-		message = storqText.getText().toString();
+		message = msg;
 		// Perform action on click
 		passingIntent.putExtra("storqm", message);
 		passingIntent.putExtra("storqt", true);
