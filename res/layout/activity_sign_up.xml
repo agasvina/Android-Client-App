@@ -49,6 +49,14 @@
             android:text="Select Gender"
             android:textColor="@android:color/black" />
 
+        <Button
+            android:id="@+id/selectDateButton"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Birthdate"
+            android:onClick="showDatePickerDialog" />
+
         <EditText
             android:id="@+id/passwordField"
             style="@style/AuthEditText"

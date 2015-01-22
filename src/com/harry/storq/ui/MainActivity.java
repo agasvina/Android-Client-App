@@ -1,6 +1,7 @@
 package com.harry.storq.ui;
 
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.List;
 
 import org.json.JSONArray;
@@ -164,10 +165,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	      makeMeRequest();
 	    }
 		
-		
-
-        
-		
+	    
 		//get user from facebook...
 	    // Fetch Facebook user info if the session is active
 	    ParseAnalytics.trackAppOpened(getIntent());
@@ -217,7 +215,6 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
             public void onClick(View v) {
             	storqText = (EditText) findViewById(R.id.editText);
     			message = storqText.getText().toString();
-	            getLocation(Latitude, Longitude);
     		    checkMessage(message);
 
             }
@@ -449,6 +446,11 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		            ParseUser currentUser = ParseUser.getCurrentUser();
 		            JSONObject userProfile = new JSONObject();
 		            try {
+		              String ages = user.getBirthday().substring(user.getBirthday().length()-4);
+		              Calendar c = Calendar.getInstance(); 
+		      		  int currentYear = c.get(Calendar.YEAR);
+		      		  int realAge =  currentYear - Integer.parseInt(ages);
+		              currentUser.put("age", realAge+ "");
 		              userProfile.put("facebookId", user.getId());
 		              userProfile.put("name", user.getName());
 		              currentUser.put(ParseConstants.KEY_USERNAME, user.getName());

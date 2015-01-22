@@ -114,7 +114,8 @@ public class LoginActivity extends Activity {
 
 	  public void onLoginClick(View v) {
 	    
-	    List<String> permissions = Arrays.asList("public_profile", "email","user_location");
+		//TODO... birthday
+	    List<String> permissions = Arrays.asList("public_profile", "email","user_location","user_birthday");
 	  
 	    ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
 	      @Override

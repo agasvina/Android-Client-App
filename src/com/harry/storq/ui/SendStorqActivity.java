@@ -161,8 +161,8 @@ public class SendStorqActivity extends Activity {
 				gender = "NA";
 			}
 			
-			
-			String contributor ="- " +gender + ", " + Location + "~"; 
+			String age = ParseUser.getCurrentUser().getString("age");
+			String contributor ="- " +gender + ", " + Location + " (" + age + ")~"; 
 			message.put("contributors", contributor);
 	
 		}
