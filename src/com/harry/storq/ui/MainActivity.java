@@ -172,14 +172,16 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	    // Fetch Facebook user info if the session is active
 	    ParseAnalytics.trackAppOpened(getIntent());
 		
+		
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		if (currentUser == null) {
-			navigateToLogin();
+		navigateToLogin();
 		}
-		else {
-			Log.i(TAG, currentUser.getUsername());
+		else if (!currentUser.getBoolean("usingFB") && !currentUser.getBoolean("emailVerified"))
+		{
+		navigateToLogin();
+		} else {
 		}
-		
 		
 		//setting up the wallpaper.
 		relativLayout = (RelativeLayout) findViewById(R.id.pager);
