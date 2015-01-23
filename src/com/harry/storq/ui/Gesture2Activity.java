@@ -108,8 +108,11 @@ public class Gesture2Activity extends Activity {
 			     chaining.putExtra("storqm", storq);
 			     chaining.putExtra("storqt", false);
 			     chaining.putExtra("forward", true);
-			     if(Location == null) Location = ParseUser.getCurrentUser().getString("location"); 		     
-			     con +="- " +gender + ", " + Location + "~"; 
+			     if(Location == null) Location = ParseUser.getCurrentUser().getString("location"); 
+			     
+
+				 String age = ParseUser.getCurrentUser().getString("age");
+			     con +="- " +gender + ", " + Location + " (" + age + ")~";; 
 				 deleteSender(dummy);
 
 			     

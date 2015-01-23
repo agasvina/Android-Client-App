@@ -749,7 +749,7 @@ containing a value of this type.
         public static final int com_facebook_list_section_header_background=0x7f020034;
         public static final int com_facebook_loginbutton_silver=0x7f020035;
         public static final int com_facebook_logo=0x7f020036;
-        public static final int com_facebook_picker_default_separator_color=0x7f020092;
+        public static final int com_facebook_picker_default_separator_color=0x7f020093;
         public static final int com_facebook_picker_item_background=0x7f020037;
         public static final int com_facebook_picker_list_focused=0x7f020038;
         public static final int com_facebook_picker_list_longpressed=0x7f020039;
@@ -834,13 +834,14 @@ containing a value of this type.
         public static final int spinner_ab_focused_ribbit=0x7f020088;
         public static final int spinner_ab_pressed_ribbit=0x7f020089;
         public static final int spinner_background_ab_ribbit=0x7f02008a;
-        public static final int tab_indicator_ab_ribbit=0x7f02008b;
-        public static final int tab_selected_focused_ribbit=0x7f02008c;
-        public static final int tab_selected_pressed_ribbit=0x7f02008d;
-        public static final int tab_selected_ribbit=0x7f02008e;
-        public static final int tab_unselected_focused_ribbit=0x7f02008f;
-        public static final int tab_unselected_pressed_ribbit=0x7f020090;
-        public static final int tab_unselected_ribbit=0x7f020091;
+        public static final int storq=0x7f02008b;
+        public static final int tab_indicator_ab_ribbit=0x7f02008c;
+        public static final int tab_selected_focused_ribbit=0x7f02008d;
+        public static final int tab_selected_pressed_ribbit=0x7f02008e;
+        public static final int tab_selected_ribbit=0x7f02008f;
+        public static final int tab_unselected_focused_ribbit=0x7f020090;
+        public static final int tab_unselected_pressed_ribbit=0x7f020091;
+        public static final int tab_unselected_ribbit=0x7f020092;
     }
     public static final class id {
         public static final int action_logout=0x7f07005c;

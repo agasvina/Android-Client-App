@@ -26,9 +26,7 @@ public class StorqApplication extends Application {
 	    
 	    ParseFacebookUtils.initialize("405243752968279");
 
-	    
-	    //PushService.setDefaultPushCallback(this, MainActivity.class);
-	    PushService.setDefaultPushCallback(this, MainActivity.class, R.drawable.ic_launcher);
+	    PushService.setDefaultPushCallback(this, Gesture2Activity.class, R.drawable.ic_launcher);
 	    ParseInstallation.getCurrentInstallation().saveInBackground();
 	}
 	
