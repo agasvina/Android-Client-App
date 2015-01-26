@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -19,6 +20,8 @@ import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -63,7 +66,10 @@ import com.squareup.okhttp.OkHttpClient;
 
 
 
-public class MainActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
+public class MainActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener,
+GestureDetector.OnGestureListener,
+GestureDetector.OnDoubleTapListener
+{
 	
 	public static final String TAG = MainActivity.class.getSimpleName();
 
@@ -126,6 +132,11 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 				    Intent intent = new Intent(MainActivity.this,FeedbackActivity.class);
 				    startActivityForResult(intent,1);
 					break;
+				case 1:
+					ParseUser.logOut();
+					navigateToLogin();				
+					break;
+
 			}
 		}
 
@@ -152,6 +163,7 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	ViewPager mViewPager;
 	private Button btnShowLocation;
 
+    private GestureDetectorCompat mDetector; 
 
 	@SuppressLint("ResourceAsColor") @SuppressWarnings("deprecation")
 	@Override
@@ -159,11 +171,19 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_main);
+		ActionBar actionBar = getActionBar();
+		actionBar.hide();
+
         
 	    Session session = ParseFacebookUtils.getSession();
 	    if (session != null && session.isOpened()) {
 	      makeMeRequest();
 	    }
+	    
+	      mDetector = new GestureDetectorCompat(this,this);
+	        // Set the gesture detector as the double tap
+	        // listener.
+	        mDetector.setOnDoubleTapListener(this);
 		
 	    
 		//get user from facebook...
@@ -493,17 +513,24 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 		    );
 		    request.executeAsync();
 		  }
-	
+
 
 	  @Override
 	  public boolean onTouchEvent(MotionEvent event) {
 		    if (gestureDetector.onTouchEvent(event)) {
 		      return true;
 		    }
+		    
+	        if(event.getAction() == MotionEvent.ACTION_DOWN)
+	            handler.postDelayed(mLongPressed, 1000);
+	        if((event.getAction() == MotionEvent.ACTION_MOVE)||(event.getAction() == MotionEvent.ACTION_UP))
+	        {  handler.removeCallbacks(mLongPressed);
+
+	        }
+	   
 		    return super.onTouchEvent(event);
 		  }
-		  
-	  
+
 
 	  private void onLeftSwipe() {
 			if(colorCounter > 8) {
@@ -663,6 +690,79 @@ public class MainActivity extends Activity implements ConnectionCallbacks, OnCon
 	    }
   
 	    
+	    
+	    final Handler handler = new Handler(); 
+	    Runnable mLongPressed = new Runnable() { 
+	        public void run() { 
+				AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
+				builder2.setItems(R.array.text_choices, mDialogListener);
+				AlertDialog dialog2 = builder2.create();
+				dialog2.show();
+				
+	        }   
+	    };
+
+	    
+	    @Override
+	    public void onLongPress(MotionEvent event) {
+	        Log.d( "onLongPress: " ,"HAHAHA"); 
+			Toast.makeText(MainActivity.this, "On Long Press", Toast.LENGTH_SHORT).show();
+
+	        
+	    }
+
+		@Override
+		public boolean onDoubleTap(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+
+	        Log.d( "onLongPress: " ,"HAHAHA"); 
+			Toast.makeText(MainActivity.this, "On Long Press", Toast.LENGTH_SHORT).show();
+			return true;
+		}
+
+		@Override
+		public boolean onDoubleTapEvent(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean onSingleTapConfirmed(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean onDown(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean onFling(MotionEvent arg0, MotionEvent arg1, float arg2,
+				float arg3) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean onScroll(MotionEvent arg0, MotionEvent arg1, float arg2,
+				float arg3) {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void onShowPress(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public boolean onSingleTapUp(MotionEvent arg0) {
+			// TODO Auto-generated method stub
+			return false;
+		}
 	    
 	    
 	

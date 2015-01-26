@@ -950,23 +950,24 @@ containing a value of this type.
         public static final int activity_main=0x7f030003;
         public static final int activity_send_storq=0x7f030004;
         public static final int activity_sign_up=0x7f030005;
-        public static final int com_facebook_friendpickerfragment=0x7f030006;
-        public static final int com_facebook_login_activity_layout=0x7f030007;
-        public static final int com_facebook_picker_activity_circle_row=0x7f030008;
-        public static final int com_facebook_picker_checkbox=0x7f030009;
-        public static final int com_facebook_picker_image=0x7f03000a;
-        public static final int com_facebook_picker_list_row=0x7f03000b;
-        public static final int com_facebook_picker_list_section_header=0x7f03000c;
-        public static final int com_facebook_picker_search_box=0x7f03000d;
-        public static final int com_facebook_picker_title_bar=0x7f03000e;
-        public static final int com_facebook_picker_title_bar_stub=0x7f03000f;
-        public static final int com_facebook_placepickerfragment=0x7f030010;
-        public static final int com_facebook_placepickerfragment_list_row=0x7f030011;
-        public static final int com_facebook_search_bar_layout=0x7f030012;
-        public static final int com_facebook_tooltip_bubble=0x7f030013;
-        public static final int com_facebook_usersettingsfragment=0x7f030014;
-        public static final int message_item=0x7f030015;
-        public static final int user_item=0x7f030016;
+        public static final int activity_splash=0x7f030006;
+        public static final int com_facebook_friendpickerfragment=0x7f030007;
+        public static final int com_facebook_login_activity_layout=0x7f030008;
+        public static final int com_facebook_picker_activity_circle_row=0x7f030009;
+        public static final int com_facebook_picker_checkbox=0x7f03000a;
+        public static final int com_facebook_picker_image=0x7f03000b;
+        public static final int com_facebook_picker_list_row=0x7f03000c;
+        public static final int com_facebook_picker_list_section_header=0x7f03000d;
+        public static final int com_facebook_picker_search_box=0x7f03000e;
+        public static final int com_facebook_picker_title_bar=0x7f03000f;
+        public static final int com_facebook_picker_title_bar_stub=0x7f030010;
+        public static final int com_facebook_placepickerfragment=0x7f030011;
+        public static final int com_facebook_placepickerfragment_list_row=0x7f030012;
+        public static final int com_facebook_search_bar_layout=0x7f030013;
+        public static final int com_facebook_tooltip_bubble=0x7f030014;
+        public static final int com_facebook_usersettingsfragment=0x7f030015;
+        public static final int message_item=0x7f030016;
+        public static final int user_item=0x7f030017;
     }
     public static final class menu {
         public static final int geocode_test=0x7f0c0000;
@@ -1213,7 +1214,8 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f050021;
+        public static final int AppBaseTheme=0x7f050024;
+        public static final int AppTheme=0x7f050021;
         public static final int AuthBackground=0x7f050016;
         public static final int AuthBackgroundImage=0x7f050017;
         public static final int AuthButton=0x7f05001c;
@@ -1227,6 +1229,8 @@ containing a value of this type.
         public static final int GridImage=0x7f05001d;
         public static final int PopupMenu_Ribbit=0x7f05000f;
         public static final int ProgressBar_Ribbit=0x7f050013;
+        public static final int RobotoButtonStyle=0x7f050023;
+        public static final int RobotoTextViewStyle=0x7f050022;
         public static final int Theme_IAPTheme=0x7f050000;
         public static final int Theme_Ribbit=0x7f050008;
         public static final int Theme_Ribbit_LightPurpleBackground=0x7f050009;

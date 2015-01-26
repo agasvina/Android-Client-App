@@ -5,19 +5,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity" >
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="100dp"
-        android:ems="10"
-        android:inputType="textMultiLine"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:textColor="@android:color/black"
-        android:maxLength="250" />
-
     <Button
         android:id="@+id/getTextButton"
         android:layout_width="wrap_content"
@@ -32,7 +19,6 @@
         android:id="@+id/latitude_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editText"
         android:layout_marginLeft="36dp"
         android:layout_marginTop="38dp"
         android:text="TextView"
@@ -42,8 +28,6 @@
         android:id="@+id/longitude_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/latitude_text"
-        android:layout_below="@+id/latitude_text"
         android:text="TextView"
         android:textColor="@android:color/black" />
 
@@ -51,10 +35,24 @@
         android:id="@+id/myAddress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/longitude_text"
-        android:layout_below="@+id/longitude_text"
         android:text="Small Text"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textColor="@android:color/black"  />
+        android:textColor="@android:color/black" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:maxLength="250"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:textColor="@android:color/black" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>
