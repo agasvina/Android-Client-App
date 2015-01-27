@@ -67,9 +67,7 @@ public class SignUpActivity extends FragmentActivity implements OnItemSelectedLi
 			public void onClick(View v) {
 				String username = mUsername.getText().toString();
 				String password = mPassword.getText().toString();
-				String email = mEmail.getText().toString();
-				//String gender = String.valueOf(mGender.getSelectedItem());
-				
+				String email = mEmail.getText().toString();				
 				username = username.trim();
 				password = password.trim();
 				email = email.trim();

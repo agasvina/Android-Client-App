@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -61,6 +62,11 @@ public class Gesture2Activity extends Activity {
 			text3.setText("...");
 			text4.setText("0 chains");
 			
+			
+			Typeface tf = Typeface.createFromAsset(getAssets(),
+	                "fonts/LeagueGothic-Regular.otf");
+			text.setTypeface(tf);
+			
 			gestureDetector = new GestureDetector(
 	                  new SwipeGestureDetector());
 			
@@ -92,9 +98,7 @@ public class Gesture2Activity extends Activity {
 			  	ParseObject dummy = MapMessages.get(parseObjectId.get(counter-1));
 			  	String storq = dummy.getString("storq");
 			  	String con = dummy.getString("contributors");
-			  	
-			  	//Get location and gender...
-			  	String gender = ParseUser.getCurrentUser().getString("gender");
+				String gender = ParseUser.getCurrentUser().getString("gender");
 				if(gender.equals("female")) {
 					gender = "F";
 				} else if (gender.equals("male")) {
@@ -108,32 +112,27 @@ public class Gesture2Activity extends Activity {
 			     chaining.putExtra("storqm", storq);
 			     chaining.putExtra("storqt", false);
 			     chaining.putExtra("forward", true);
-			     if(Location == null) Location = ParseUser.getCurrentUser().getString("location"); 
-			     
-
+			     if(Location == null) Location = ParseUser.getCurrentUser().getString("location"); 	     
 				 String age = ParseUser.getCurrentUser().getString("age");
 			     con +="- " +gender + ", " + Location + " (" + age + ")~";; 
 				 deleteSender(dummy);
-
-			     
-			     chaining.putExtra("contributors", con);
-			     
-			    
-				text.setText(storq);
-				String []names = (String[]) ParseConstants.parseString(con);
-				
-				if(names.length > 2) {
-					text1.setText(names[0]);
-					text2.setText(names[1]);
-					text3.setText(names[2]);
-				} else if (names.length > 1) {
-					text1.setText(names[0]);
-					text2.setText(names[1]);
-				} else {
-					text1.setText(names[0]);
-				}	
-					text4.setText(""+ names.length + " chains");	
-				counter--;
+			     chaining.putExtra("contributors", con);			     
+			   
+					text.setText(storq);
+					String []names = (String[]) ParseConstants.parseString(con);
+					
+					if(names.length > 2) {
+						text1.setText(names[0]);
+						text2.setText(names[1]);
+						text3.setText(names[2]);
+					} else if (names.length > 1) {
+						text1.setText(names[0]);
+						text2.setText(names[1]);
+					} else {
+						text1.setText(names[0]);
+					}	
+						text4.setText(""+ names.length + " chains");	
+					counter--;
 		  } else {
 			  finish();
 		  }

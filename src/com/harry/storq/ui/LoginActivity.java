@@ -6,11 +6,8 @@ import java.util.List;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -38,11 +35,10 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
 		setContentView(R.layout.activity_login);
-	    ParseFacebookUtils.initialize("405243752968279");
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
-
 		
+	    ParseFacebookUtils.initialize(getString(R.string.facebook_id));
 		mSignUpTextView = (TextView)findViewById(R.id.signUpText);
 		mSignUpTextView.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -73,7 +69,6 @@ public class LoginActivity extends Activity {
 					dialog.show();
 				}
 				else {
-					// Login
 					setProgressBarIndeterminateVisibility(true);
 					
 					ParseUser.logInInBackground(username, password, new LogInCallback() {
@@ -114,7 +109,6 @@ public class LoginActivity extends Activity {
 
 	  public void onLoginClick(View v) {
 	    
-		//TODO... birthday
 	    List<String> permissions = Arrays.asList("public_profile", "email","user_location","user_birthday");
 	  
 	    ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {

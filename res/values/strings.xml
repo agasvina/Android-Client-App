@@ -91,5 +91,7 @@
     <string name="title_activity_splash">Splash</string>
     <string name="sending_storq">Sending storq</string>
     <string name="bad_words_msg">Message contains bad words.. Unable to send</string>
+    <string name="profanity_error">please remove profanity from message and resend</string>
+    <string name="facebook_id">405243752968279</string>
 
 </resources>

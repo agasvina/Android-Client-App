@@ -8,17 +8,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.harry.storq.R;
 import com.harry.storq.utils.ParseConstants;
-import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseInstallation;
@@ -88,7 +84,6 @@ public class SendStorqActivity extends Activity {
 				mUsers.add(p);
 			}
 		} catch (ParseException e1) {
-			//e1.printStackTrace();
 		}
 		
 		
@@ -151,7 +146,6 @@ public class SendStorqActivity extends Activity {
 		if(forward) {				
 		    message.put("contributors", senders);	
 		} else {
-			//TODO: put the message 
 			String gender = ParseUser.getCurrentUser().getString("gender");
 			if(gender.equals("female")) {
 				gender = "F";

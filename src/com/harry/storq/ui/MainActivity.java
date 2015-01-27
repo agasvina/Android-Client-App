@@ -30,12 +30,9 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.Window;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.FacebookRequestError;
@@ -61,9 +58,6 @@ import com.parse.ParseUser;
 import com.squareup.okhttp.Call;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
-//import com.squareup.okhttp.Request;
-//import com.squareup.okhttp.Response;
-
 
 
 public class MainActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener,
@@ -71,12 +65,7 @@ GestureDetector.OnGestureListener,
 GestureDetector.OnDoubleTapListener
 {
 	
-	public static final String TAG = MainActivity.class.getSimpleName();
-
-	
-	public static final int MEDIA_TYPE_TEXT = 6;	
-	public static final int FILE_SIZE_LIMIT = 1024*1024*10; // 10 MB
-	
+	public static final String TAG = MainActivity.class.getSimpleName();	
 	protected static Double Longitude;
 	protected static Double Latitude;
 	
@@ -95,7 +84,7 @@ GestureDetector.OnDoubleTapListener
 	protected static String Location;
 	
 	
-	//Wallpaper Handling
+	//Wallpaper 
 	protected RelativeLayout relativLayout;
 	protected int colorCounter = 0;
 	protected int[] colorArray;
@@ -105,9 +94,6 @@ GestureDetector.OnDoubleTapListener
 	public static List<ParseObject> mMessages;
 	protected SwipeRefreshLayout mSwipeRefreshLayout;
 
-	
-	//added the location:
-	//TODO: refractor later
 
     /**
      * Provides the entry point to Google Play services.
@@ -119,9 +105,6 @@ GestureDetector.OnDoubleTapListener
      */
     protected Location mLastLocation;
 
-    protected TextView mLatitudeText;
-    protected TextView mLongitudeText;
-    protected TextView myAddress;
 	
 	protected DialogInterface.OnClickListener mDialogListener = 
 			new DialogInterface.OnClickListener() {
@@ -142,11 +125,6 @@ GestureDetector.OnDoubleTapListener
 
 		
 	};
-
-	
-	
-	
-	
 	
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -161,8 +139,6 @@ GestureDetector.OnDoubleTapListener
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
-	private Button btnShowLocation;
-
     private GestureDetectorCompat mDetector; 
 
 	@SuppressLint("ResourceAsColor") @SuppressWarnings("deprecation")
@@ -210,39 +186,19 @@ GestureDetector.OnDoubleTapListener
 		}
 		
 		//this is for the location
-        mLatitudeText = (TextView) findViewById((R.id.latitude_text));
-        mLongitudeText = (TextView) findViewById((R.id.longitude_text));
-        myAddress = (TextView) findViewById(R.id.myAddress);
-        mLatitudeText.setVisibility(View.INVISIBLE);
-        mLongitudeText.setVisibility(View.INVISIBLE);
-        myAddress.setVisibility(View.INVISIBLE);
         buildGoogleApiClient();      
         if(Location == null) {
         	Location = ParseUser.getCurrentUser().getString("location");
         }
-
-	    
 		
 		refresh();
 		
 		//Gesture Activity
 		gestureDetector = new GestureDetector(
                 new SwipeGestureDetector());		
-		
-		//Binding the text edit and button to the appropriate android object
-		Button button = (Button) findViewById(R.id.getTextButton);
-		button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	storqText = (EditText) findViewById(R.id.editText);
-    			message = storqText.getText().toString();
-    		    checkMessage(message);
+	} //End of OnCreate Method
 
-            }
-        });
-		
-		
-		}
-
+	
 	@Override
 	public void onResume()
 	{
@@ -250,7 +206,6 @@ GestureDetector.OnDoubleTapListener
 	}
 
 	public void refresh() {
-
 		ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(ParseConstants.CLASS_MESSAGES);
 		query.whereEqualTo(ParseConstants.KEY_RECIPIENT_IDS, ParseUser.getCurrentUser().getObjectId());
 		query.findInBackground(new FindCallback<ParseObject>() {
@@ -262,7 +217,6 @@ GestureDetector.OnDoubleTapListener
 					startActivity(intent);
 				}
 				else {
-					Log.e(TAG, e.getMessage());
 					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 					builder.setMessage(e.getMessage())
 						.setTitle(R.string.error_title)
@@ -284,7 +238,6 @@ GestureDetector.OnDoubleTapListener
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -311,9 +264,9 @@ GestureDetector.OnDoubleTapListener
 	
 	
 	  private void getLocation(double latitude, double longitude) {      
-			String forecastUrl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+latitude+ ","+ longitude +"&sensor=true&types=(cities)";
-
-            Log.d("JSONFORMAT", forecastUrl);
+			String forecastUrl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="
+								 +latitude+ ","
+								 + longitude +"&sensor=true&types=(cities)";
 
 	        if (isNetworkAvailable()) {
 
@@ -326,11 +279,6 @@ GestureDetector.OnDoubleTapListener
 	            call.enqueue(new Callback() {
 	                @Override
 	                public void onFailure( com.squareup.okhttp.Request request, IOException e) {
-	                    runOnUiThread(new Runnable() {
-	                        @Override
-	                        public void run() {
-	                        }
-	                    });
 	                }
 
 	                @Override
@@ -355,10 +303,7 @@ GestureDetector.OnDoubleTapListener
 		                       i++;
 	                        }
 	                        
-	                        Log.d("JSONFORMAT", sb.toString());
 	                        MainActivity.Location = MainActivity.sb.toString();
-	                        
-
 	                        if (response.isSuccessful()) {
 		                        MainActivity.Location = MainActivity.sb.toString();
 	                        } else {
@@ -377,13 +322,10 @@ GestureDetector.OnDoubleTapListener
 
 
 	private void checkMessage(String Message) {     
-		    	String newMsg = Message.replaceAll(" ", "%20");
-				//String profanity = "http://www.wdyl.com/profanity?q="+ "%27" + newMsg+  "%27";
-				String profanity = "http://www.purgomalum.com/service/json?text=" + newMsg;
-
+		    	final String newMsg = Message.replaceAll(" ", "%20");
+				String profanity = "http://www.wdyl.com/profanity?q="+newMsg;
 	        if (isNetworkAvailable()) {
 
-				 Log.d("JSONFORMAT", "Network Availabe...");
 
 	            OkHttpClient client = new OkHttpClient();
 	            com.squareup.okhttp.Request request = new  com.squareup.okhttp.Request.Builder()
@@ -393,9 +335,7 @@ GestureDetector.OnDoubleTapListener
 	            Call call = client.newCall(request);
 	            call.enqueue(new Callback() {
 	                @Override
-	                public void onFailure( com.squareup.okhttp.Request request, IOException e) {
-	         
-                        Log.d("JSONFORMAT", "no response");            
+	                public void onFailure( com.squareup.okhttp.Request request, IOException e) {            
 	                }
 
 	                @Override
@@ -403,16 +343,23 @@ GestureDetector.OnDoubleTapListener
 	                    try 
 	                    {
 	                        String jsonData = response.body().string();	
-	                        Log.d("JSONFORMAT", jsonData);
-
 	                        JSONObject object = new JSONObject(jsonData);
-	                        String msg = object.getString("result");
-	                        
-	                        message = msg;
+	                        final boolean prof = object.getBoolean("response");	                        
+	                        message = newMsg;
 	                        runOnUiThread(new Runnable() {
      	                        @Override
+
      	                        public void run() {
+        	                        if(!prof) {
      		                        sendMessage(message);
+        	                        } else { 
+        	        					AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        	        					builder.setMessage(R.string.profanity_error)
+        	        						.setTitle(R.string.error_title)
+        	        						.setPositiveButton(android.R.string.ok, null);
+        	        					AlertDialog dialog = builder.create();
+        	        					dialog.show();	                        	
+        	                        }
      	                        }
     	                    });
 	                        
@@ -605,10 +552,8 @@ GestureDetector.OnDoubleTapListener
 	        // Right swipe
 	        } else if (-diff > SWIPE_MIN_DISTANCE
 	        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-	        	MainActivity.this.onRightSwipe();
-	        
+	        	MainActivity.this.onRightSwipe();	        
 	        }
-	        
 	        if (diffY > SWIPE_MIN_DISTANCE
 	        && Math.abs(velocityY) > SWIPE_THRESHOLD_VELOCITY) {
 	        	MainActivity.this.onUpSwipe();
@@ -664,8 +609,6 @@ GestureDetector.OnDoubleTapListener
 	        if (mLastLocation != null) {
 	        	MainActivity.Latitude = mLastLocation.getLatitude();
 	        	MainActivity.Longitude = mLastLocation.getLongitude();
-	            mLatitudeText.setText(String.valueOf(Latitude));
-	            mLongitudeText.setText(String.valueOf(Longitude));
 	            getLocation(Latitude, Longitude);
 	        }
 	        
@@ -705,19 +648,13 @@ GestureDetector.OnDoubleTapListener
 	    
 	    @Override
 	    public void onLongPress(MotionEvent event) {
-	        Log.d( "onLongPress: " ,"HAHAHA"); 
-			Toast.makeText(MainActivity.this, "On Long Press", Toast.LENGTH_SHORT).show();
-
-	        
+	      
 	    }
 
 		@Override
 		public boolean onDoubleTap(MotionEvent arg0) {
-			// TODO Auto-generated method stub
-
-	        Log.d( "onLongPress: " ,"HAHAHA"); 
-			Toast.makeText(MainActivity.this, "On Long Press", Toast.LENGTH_SHORT).show();
-			return true;
+	
+			return false;
 		}
 
 		@Override
