@@ -111,11 +111,11 @@ GestureDetector.OnDoubleTapListener
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			switch(which) {
-				case 0: 
-				    Intent intent = new Intent(MainActivity.this,FeedbackActivity.class);
-				    startActivityForResult(intent,1);
-					break;
-				case 1:
+//				case 0: 
+//				    Intent intent = new Intent(MainActivity.this,FeedbackActivity.class);
+//				    startActivityForResult(intent,1);
+//					break;
+				case 0:
 					ParseUser.logOut();
 					navigateToLogin();				
 					break;
@@ -321,7 +321,7 @@ GestureDetector.OnDoubleTapListener
 	    }
 
 
-	private void checkMessage(String Message) {     
+	private void checkMessage(final String Message) {     
 		    	final String newMsg = Message.replaceAll(" ", "%20");
 				String profanity = "http://www.wdyl.com/profanity?q="+newMsg;
 	        if (isNetworkAvailable()) {
@@ -345,7 +345,7 @@ GestureDetector.OnDoubleTapListener
 	                        String jsonData = response.body().string();	
 	                        JSONObject object = new JSONObject(jsonData);
 	                        final boolean prof = object.getBoolean("response");	                        
-	                        message = newMsg;
+	                        message = Message;
 	                        runOnUiThread(new Runnable() {
      	                        @Override
 
@@ -510,9 +510,10 @@ GestureDetector.OnDoubleTapListener
 	  }
 	  
 
+	  @SuppressLint("DefaultLocale") 
 	  public void sendMessage(String msg) {
 		passingIntent= new Intent(MainActivity.this, SendStorqActivity.class);
-		message = msg;
+		message = msg.toLowerCase();
 		// Perform action on click
 		passingIntent.putExtra("storqm", message);
 		passingIntent.putExtra("storqt", true);

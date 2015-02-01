@@ -8,12 +8,14 @@
     <TextView
         android:id="@+id/title"
         style="@style/AuthTitle"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:text= "" />
 
     <TextView
         android:id="@+id/subtitle"
         style="@style/AuthTitle.AuthSubTitle"
-        android:textColor="@android:color/black" />
+        android:textColor="@android:color/black"
+        android:text= ""  />
 
     <LinearLayout
         android:id="@+id/editTextLayout"
@@ -36,7 +38,8 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="Select gender"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceSmall"
+              />
 
         <Spinner
             android:id="@+id/spinner"

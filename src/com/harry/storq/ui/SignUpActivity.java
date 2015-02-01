@@ -73,7 +73,7 @@ public class SignUpActivity extends FragmentActivity implements OnItemSelectedLi
 				email = email.trim();
 				gender = gender.trim();
 				
-				if (username.isEmpty() || password.isEmpty() || email.isEmpty() || gender.isEmpty() || year == -1 || year > 200) {
+				if (username.isEmpty() || password.isEmpty() || email.isEmpty() || gender.isEmpty() || year == -1 || year > 200 || !username.equals(email)) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
 					builder.setMessage(R.string.signup_error_message)
 						.setTitle(R.string.signup_error_title)

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.net.Uri;
@@ -126,7 +127,7 @@ public class SendStorqActivity extends Activity {
 	} 
 
 
-	protected ParseObject createMessage() {
+	@SuppressLint("DefaultLocale") protected ParseObject createMessage() {
 		ParseObject message = new ParseObject(ParseConstants.CLASS_MESSAGES);
 		message.put(ParseConstants.KEY_SENDER_ID, ParseUser.getCurrentUser().getObjectId());
 		message.put(ParseConstants.KEY_SENDER_NAME, ParseUser.getCurrentUser().getUsername());
@@ -156,8 +157,9 @@ public class SendStorqActivity extends Activity {
 			}
 			
 			String age = ParseUser.getCurrentUser().getString("age");
-			String contributor ="- " +gender + ", " + Location + " (" + age + ")~"; 
-			message.put("contributors", contributor);
+			String contributor = gender + ", " + Location + " (" + age + ")~"; 
+			String c = contributor.toLowerCase();
+			message.put("contributors", c);
 	
 		}
 		
@@ -182,7 +184,7 @@ public class SendStorqActivity extends Activity {
 			public void done(ParseException e) {
 				if (e == null) {
 					sendPushNotifications();
-					Toast.makeText(SendStorqActivity.this, R.string.success_message, Toast.LENGTH_LONG).show();
+					//Toast.makeText(SendStorqActivity.this, R.string.success_message, Toast.LENGTH_LONG).show();
 				}
 				else {
 					AlertDialog.Builder builder = new AlertDialog.Builder(SendStorqActivity.this);

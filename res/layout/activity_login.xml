@@ -4,33 +4,13 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity" >
 
-    <ImageView
-        android:id="@+id/backgroundImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerHorizontal="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/background_main"     
-        android:contentDescription="@string/content_desc_background"
-        android:textColor="@android:color/black" />
-
-    <TextView
-        android:id="@+id/title"
-        style="@style/AuthTitle"
-        android:textColor="@android:color/black" />
-
-    <TextView
-        android:id="@+id/subtitle"
-        style="@style/AuthTitle.AuthSubTitle" 
-        android:textColor="@android:color/black"/>
 
     <LinearLayout
         android:id="@+id/editTextLayout"
         style="@style/AuthFieldContainer"
-        android:textColor="@android:color/black" >
+        android:textColor="@android:color/black"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true" >
 
         <EditText
             android:id="@+id/usernameField"
@@ -60,33 +40,10 @@
         android:id="@+id/signUpText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/loginButton"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
+        android:layout_marginBottom="70dp"
         android:text="@string/sign_up_text"
         android:textColor="@android:color/black" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/signUpText"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="42dp"
-        
-        android:text="@string/com_facebook_loginview_log_in_button"
-        android:textColor="@color/com_facebook_loginview_text_color"
-        android:textSize="@dimen/com_facebook_loginview_text_size"
-        android:textStyle="bold"
-
-        android:background="@drawable/com_facebook_button_blue"
-        android:drawableLeft="@drawable/com_facebook_inverse_icon"
-        android:drawablePadding="@dimen/com_facebook_likebutton_compound_drawable_padding"
-        android:paddingLeft="@dimen/com_facebook_loginview_padding_left"
-        android:paddingTop="@dimen/com_facebook_loginview_padding_top"
-        android:paddingRight="@dimen/com_facebook_loginview_padding_right"
-        android:paddingBottom="@dimen/com_facebook_loginview_padding_bottom"
-        android:onClick="onLoginClick"
-        
-        />
 
 </RelativeLayout>

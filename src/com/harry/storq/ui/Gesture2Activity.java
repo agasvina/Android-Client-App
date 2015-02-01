@@ -31,7 +31,6 @@ public class Gesture2Activity extends Activity {
 	  	protected TextView text1;
 	  	protected TextView text2;
 	  	protected TextView text3;
-	  	protected TextView text4;
 	  	
 		protected String storq;
 		protected Intent chaining;
@@ -55,16 +54,13 @@ public class Gesture2Activity extends Activity {
 			text1 = (TextView) findViewById(R.id.textView1);
 			text2= (TextView) findViewById(R.id.textView2);
 			text3 = (TextView) findViewById(R.id.textView3);
-			text4 = (TextView) findViewById(R.id.textView4);
 
 			text1.setText("...");
 			text2.setText("...");
 			text3.setText("...");
-			text4.setText("0 chains");
-			
 			
 			Typeface tf = Typeface.createFromAsset(getAssets(),
-	                "fonts/LeagueGothic-Regular.otf");
+	                "fonts/GOTHICB.TTF");
 			text.setTypeface(tf);
 			
 			gestureDetector = new GestureDetector(
@@ -100,11 +96,11 @@ public class Gesture2Activity extends Activity {
 			  	String con = dummy.getString("contributors");
 				String gender = ParseUser.getCurrentUser().getString("gender");
 				if(gender.equals("female")) {
-					gender = "F";
+					gender = "f";
 				} else if (gender.equals("male")) {
-					gender = "M";
+					gender = "m";
 				} else {
-					gender = "NA";
+					gender = "na";
 				}
 				
 			  	 String Location = getIntent().getStringExtra("Location");
@@ -114,7 +110,7 @@ public class Gesture2Activity extends Activity {
 			     chaining.putExtra("forward", true);
 			     if(Location == null) Location = ParseUser.getCurrentUser().getString("location"); 	     
 				 String age = ParseUser.getCurrentUser().getString("age");
-			     con +="- " +gender + ", " + Location + " (" + age + ")~";; 
+			     con +=gender.toLowerCase() + ", " + Location.toLowerCase() + " (" + age + ")~";; 
 				 deleteSender(dummy);
 			     chaining.putExtra("contributors", con);			     
 			   
@@ -131,7 +127,6 @@ public class Gesture2Activity extends Activity {
 					} else {
 						text1.setText(names[0]);
 					}	
-						text4.setText(""+ names.length + " chains");	
 					counter--;
 		  } else {
 			  finish();

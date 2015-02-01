@@ -50,18 +50,6 @@
         android:layout_centerHorizontal="true"
         android:textAppearance="?android:attr/textAppearanceSmall" 
         android:textColor="@android:color/black" />
-    
-     <TextView
-         android:id="@+id/textView4"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/textView3"
-         android:layout_centerHorizontal="true"
-         android:text="0 chains"
-         android:paddingTop="@dimen/activity_horizontal_margin_larger"
-         android:paddingLeft="@dimen/activity_horizontal_margin_larger"
-         android:textAppearance="?android:attr/textAppearanceSmall" 
-         android:textColor="@android:color/black" />
 
      <TextView
          android:id="@+id/textView"

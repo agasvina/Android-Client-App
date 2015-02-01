@@ -55,23 +55,4 @@
         android:text="@string/sign_up_text"
         android:textColor="@color/black" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/signUpText"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="54dp"
-        android:background="@drawable/com_facebook_button_blue"
-        android:drawableLeft="@drawable/com_facebook_inverse_icon"
-        android:drawablePadding="@dimen/com_facebook_likebutton_compound_drawable_padding"
-        android:onClick="onLoginClick"
-        android:paddingBottom="@dimen/com_facebook_loginview_padding_bottom"
-        android:paddingLeft="@dimen/com_facebook_loginview_padding_left"
-        android:paddingRight="@dimen/com_facebook_loginview_padding_right"
-        android:paddingTop="@dimen/com_facebook_loginview_padding_top"
-        android:text="@string/com_facebook_loginview_log_in_button"
-        android:textColor="@color/com_facebook_loginview_text_color"
-        android:textSize="@dimen/com_facebook_loginview_text_size"
-        android:textStyle="bold" />
-
 </RelativeLayout>

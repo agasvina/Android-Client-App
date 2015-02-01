@@ -100,36 +100,36 @@ public class LoginActivity extends Activity {
 
 
 	
-
-	  @Override
-	  public void onActivityResult(int requestCode, int resultCode, Intent data) {
-	    super.onActivityResult(requestCode, resultCode, data);
-	    ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
-	  }
-
-	  public void onLoginClick(View v) {
-	    
-	    List<String> permissions = Arrays.asList("public_profile", "email","user_location","user_birthday");
-	  
-	    ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
-	      @Override
-	      public void done(ParseUser user, ParseException err) {
-	        if (user == null) {
-	        } else if (user.isNew()) {
-	          showUserDetailsActivity();
-	        } else {
-	          showUserDetailsActivity();
-	        }
-	      }
-	    });
-	  } 
-
-		  private void showUserDetailsActivity() {
-			    Intent intent = new Intent(this, MainActivity.class);
-			    startActivity(intent);
-		  
-		  }
-	
+//
+//	  @Override
+//	  public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//	    super.onActivityResult(requestCode, resultCode, data);
+//	    ParseFacebookUtils.finishAuthentication(requestCode, resultCode, data);
+//	  }
+//
+//	  public void onLoginClick(View v) {
+//	    
+//	    List<String> permissions = Arrays.asList("public_profile", "email","user_location","user_birthday");
+//	  
+//	    ParseFacebookUtils.logIn(permissions, this, new LogInCallback() {
+//	      @Override
+//	      public void done(ParseUser user, ParseException err) {
+//	        if (user == null) {
+//	        } else if (user.isNew()) {
+//	          showUserDetailsActivity();
+//	        } else {
+//	          showUserDetailsActivity();
+//	        }
+//	      }
+//	    });
+//	  } 
+//
+//		  private void showUserDetailsActivity() {
+//			    Intent intent = new Intent(this, MainActivity.class);
+//			    startActivity(intent);
+//		  
+//		  }
+//	
 	
 	
 

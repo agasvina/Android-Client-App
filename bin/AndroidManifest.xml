@@ -110,7 +110,7 @@
         </activity>
         <activity
             android:name="com.harry.storq.ui.SplashActivity"
-            android:label="@string/title_activity_splash"
+            android:label="storq"
             android:screenOrientation="portrait"  >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

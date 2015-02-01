@@ -7,12 +7,12 @@
     <string name="title_section2">Friends</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="hello_world">Hello world!</string>
-    <string name="username_hint">Username</string>
+    <string name="username_hint">e-mail</string>
     <string name="password_hint">Password</string>
     <string name="login_button_label">SIGN IN</string>
     <string name="sign_up_text">Don\'t have an account? Sign up!</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
-    <string name="email_hint">Email</string>
+    <string name="email_hint">retype e-mail</string>
     <string name="sign_up_button_label">SIGN UP</string>
     <string name="signup_error_message">Please make sure you enter a username, password, and email address!</string>
     <string name="signup_error_title">Oops!</string>
@@ -40,8 +40,7 @@
         <item>Choose Video</item>
     </string-array>
     <string-array name="text_choices">
-        <item>Send us feedback</item>
-        <item>Would you like to log out?</item>
+        <item>  would you like to log out?</item>
     </string-array>
     <string-array name="gender_array">
         <item>male</item>
