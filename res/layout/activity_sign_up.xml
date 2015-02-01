@@ -26,7 +26,8 @@
             android:id="@+id/usernameField"
             style="@style/AuthEditText"
             android:hint="@string/username_hint"
-            android:textColor="@android:color/black" >
+            android:textColor="@android:color/black" 
+            android:gravity="center">
 
             <requestFocus />
         </EditText>
@@ -39,6 +40,7 @@
             android:layout_centerVertical="true"
             android:text="Select gender"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:gravity="center"
               />
 
         <Spinner
@@ -49,7 +51,7 @@
             android:layout_weight="1"
             android:entries="@array/gender_array"
             android:prompt="@string/spinner_title"
-            android:text="Select Gender"
+            android:text="select gender"
             android:textColor="@android:color/black" />
 
         <Button
@@ -57,7 +59,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Birthdate"
+            android:text="select birthdate"
             android:onClick="showDatePickerDialog" />
 
         <EditText
@@ -65,14 +67,16 @@
             style="@style/AuthEditText"
             android:hint="@string/password_hint"
             android:inputType="textPassword"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black" 
+            android:gravity="center"/>
 
         <EditText
             android:id="@+id/emailField"
             style="@style/AuthEditText"
             android:hint="@string/email_hint"
             android:inputType="textEmailAddress"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/black"
+            android:gravity="center" />
     </LinearLayout>
 
     <Button

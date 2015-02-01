@@ -7,6 +7,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -48,9 +49,23 @@ public class LoginActivity extends Activity {
 			}
 		});
 		
+
+		Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/GOTHICB.TTF");
+		mSignUpTextView.setTypeface(tf);
+
+		
+		
 		mUsername = (EditText)findViewById(R.id.usernameField);
 		mPassword = (EditText)findViewById(R.id.passwordField);
 		mLoginButton = (Button)findViewById(R.id.loginButton);
+		
+		
+		mUsername.setTypeface(tf);
+		mPassword.setTypeface(tf);
+		mLoginButton.setTypeface(tf);
+
+
 		mLoginButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {

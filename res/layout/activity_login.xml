@@ -4,46 +4,44 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity" >
 
-
-    <LinearLayout
-        android:id="@+id/editTextLayout"
-        style="@style/AuthFieldContainer"
-        android:textColor="@android:color/black"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" >
-
-        <EditText
-            android:id="@+id/usernameField"
-            style="@style/AuthEditText"
-            android:hint="@string/username_hint"
-            android:textColor="@android:color/black" >
-
-            <requestFocus />
-        </EditText>
-
-        <EditText
-            android:id="@+id/passwordField"
-            style="@style/AuthEditText"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword"
-            android:textColor="@android:color/black" />
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/loginButton"
-        style="@style/AuthButton"
-        android:text="@string/login_button_label"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/editTextLayout" />
-
     <TextView
         android:id="@+id/signUpText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/loginButton"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="70dp"
         android:text="@string/sign_up_text"
         android:textColor="@android:color/black" />
+
+    <Button
+        android:id="@+id/loginButton"
+        style="@style/AuthButton"
+        android:layout_below="@+id/passwordField"
+        android:layout_centerHorizontal="true"
+        android:text="@string/login_button_label" />
+
+    <EditText
+        android:id="@+id/passwordField"
+        style="@style/AuthEditText"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:hint="@string/password_hint"
+        android:inputType="textPassword"
+        android:textColor="@android:color/black"
+        android:gravity="center" />
+
+    <EditText
+        android:id="@+id/usernameField"
+        style="@style/AuthEditText"
+        android:layout_width="wrap_content"
+        android:layout_above="@+id/passwordField"
+        android:layout_alignLeft="@+id/signUpText"
+        android:hint="@string/username_hint"
+        android:textColor="@android:color/black"
+        android:gravity="center" >
+
+        <requestFocus />
+    </EditText>
 
 </RelativeLayout>

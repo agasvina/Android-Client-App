@@ -16,6 +16,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -24,15 +25,16 @@ import android.os.Handler;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.FacebookRequestError;
@@ -150,6 +152,12 @@ GestureDetector.OnDoubleTapListener
 		ActionBar actionBar = getActionBar();
 		actionBar.hide();
 
+
+		Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/GOTHICB.TTF");
+		
+		storqText = (EditText) findViewById(R.id.editText);
+		storqText.setTypeface(tf);
         
 	    Session session = ParseFacebookUtils.getSession();
 	    if (session != null && session.isOpened()) {
@@ -497,7 +505,6 @@ GestureDetector.OnDoubleTapListener
 	  }
 	  
 	  private void onUpSwipe() {
-			storqText = (EditText) findViewById(R.id.editText);
 			message = storqText.getText().toString();
 		    checkMessage(message);
 	  }
@@ -506,7 +513,10 @@ GestureDetector.OnDoubleTapListener
 	  
 	  
 	  private void onDownSwipe() {
-		  
+			AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
+			builder2.setItems(R.array.text_choices, mDialogListener);
+			AlertDialog dialog2 = builder2.create();
+			dialog2.show();
 	  }
 	  
 

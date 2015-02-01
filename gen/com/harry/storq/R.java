@@ -805,7 +805,7 @@ containing a value of this type.
         public static final int action_settings=0x7f070057;
         public static final int adjust_height=0x7f070002;
         public static final int adjust_width=0x7f070001;
-        public static final int backgroundImage=0x7f070022;
+        public static final int backgroundImage=0x7f070027;
         public static final int book_now=0x7f070012;
         public static final int bottom=0x7f07001c;
         public static final int box_count=0x7f07001b;
@@ -842,10 +842,10 @@ containing a value of this type.
         public static final int com_facebook_usersettingsfragment_logo_image=0x7f07004e;
         public static final int com_facebook_usersettingsfragment_profile_name=0x7f07004f;
         public static final int donate_with_google=0x7f070013;
-        public static final int editText=0x7f070027;
-        public static final int editTextLayout=0x7f070029;
+        public static final int editText=0x7f070028;
+        public static final int editTextLayout=0x7f070030;
         public static final int emailField=0x7f070034;
-        public static final int getTextButton=0x7f070028;
+        public static final int getTextButton=0x7f070029;
         public static final int grayscale=0x7f070015;
         public static final int holo_dark=0x7f070007;
         public static final int holo_light=0x7f070008;
@@ -853,15 +853,15 @@ containing a value of this type.
         public static final int inline=0x7f07001d;
         public static final int large=0x7f070018;
         public static final int left=0x7f070020;
-        public static final int loginButton=0x7f07002c;
+        public static final int loginButton=0x7f07002b;
         public static final int match_parent=0x7f07000e;
         public static final int messageIcon=0x7f070051;
         public static final int monochrome=0x7f070016;
         public static final int nameLabel=0x7f070056;
         public static final int none=0x7f070000;
         public static final int normal=0x7f070003;
-        public static final int pager=0x7f070030;
-        public static final int passwordField=0x7f07002b;
+        public static final int pager=0x7f070022;
+        public static final int passwordField=0x7f07002c;
         public static final int picker_subtitle=0x7f070046;
         public static final int production=0x7f070009;
         public static final int progressBar1=0x7f070031;
@@ -872,7 +872,7 @@ containing a value of this type.
         public static final int selectDateButton=0x7f070033;
         public static final int selectionDetails=0x7f07000d;
         public static final int senderLabel=0x7f070052;
-        public static final int signUpText=0x7f07002d;
+        public static final int signUpText=0x7f07002a;
         public static final int signupButton=0x7f070035;
         public static final int small=0x7f070017;
         public static final int spinner=0x7f070032;
@@ -888,7 +888,7 @@ containing a value of this type.
         public static final int title=0x7f07002e;
         public static final int top=0x7f07001e;
         public static final int userImageView=0x7f070054;
-        public static final int usernameField=0x7f07002a;
+        public static final int usernameField=0x7f07002d;
         public static final int wrap_content=0x7f07000f;
     }
     public static final class integer {

@@ -1,23 +1,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+      android:id="@+id/pager"
     tools:context="com.harry.storq.ui.Gesture2Activity" >
 
         
-        <ImageView
-        android:id="@+id/backgroundImage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_centerHorizontal="true"
-        android:scaleType="fitXY"
-        android:src="@drawable/background_main"     
-        android:contentDescription="@string/content_desc_background"
-        android:textColor="@android:color/black" />
-    
     
     <TextView
         android:id="@+id/textView3"
@@ -60,7 +48,8 @@
          android:layout_marginTop="157dp"
          android:paddingLeft="@dimen/activity_horizontal_margin_larger"
          android:paddingRight="@dimen/activity_horizontal_margin_larger"
-         android:text="Storq messages"
+         android:text="storq messages"
+         android:gravity="center"
          android:textAppearance="?android:attr/textAppearanceLarge"
          android:textColor="@android:color/black" />
 

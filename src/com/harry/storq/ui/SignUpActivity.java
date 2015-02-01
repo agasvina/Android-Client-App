@@ -5,6 +5,7 @@ import java.util.Calendar;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
@@ -54,14 +55,23 @@ public class SignUpActivity extends FragmentActivity implements OnItemSelectedLi
 		mGender.setOnItemSelectedListener(this);
 		
 	
+		
+		
 		Calendar c = Calendar.getInstance(); 
 		currentYear = c.get(Calendar.YEAR);
 		
 		
+		Typeface tf = Typeface.createFromAsset(getAssets(),
+                "fonts/GOTHICB.TTF");
+		mUsername.setTypeface(tf);	
+		mPassword.setTypeface(tf);
+		mEmail.setTypeface(tf);
 		
 		
 		
 		mSignUpButton = (Button)findViewById(R.id.signupButton);
+		mSignUpButton.setTypeface(tf);
+
 		mSignUpButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -72,8 +82,9 @@ public class SignUpActivity extends FragmentActivity implements OnItemSelectedLi
 				password = password.trim();
 				email = email.trim();
 				gender = gender.trim();
+
 				
-				if (username.isEmpty() || password.isEmpty() || email.isEmpty() || gender.isEmpty() || year == -1 || year > 200 || !username.equals(email)) {
+				if (username.isEmpty() || password.isEmpty() || email.isEmpty() || gender.isEmpty() || year == -1 || year > 200 || !username.equals(email) || year < 16) {
 					AlertDialog.Builder builder = new AlertDialog.Builder(SignUpActivity.this);
 					builder.setMessage(R.string.signup_error_message)
 						.setTitle(R.string.signup_error_title)

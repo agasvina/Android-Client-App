@@ -7,6 +7,7 @@ import java.util.Map;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -16,6 +17,7 @@ import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.harry.storq.R;
@@ -44,6 +46,8 @@ public class Gesture2Activity extends Activity {
 		protected List<ParseObject> mMessages;
 		protected Map<String, ParseObject> MapMessages;
 		protected ArrayList<String> parseObjectId;
+		
+		protected RelativeLayout relativLayout;
 	  
 	  @SuppressWarnings("deprecation")
 	  @Override
@@ -55,9 +59,18 @@ public class Gesture2Activity extends Activity {
 			text2= (TextView) findViewById(R.id.textView2);
 			text3 = (TextView) findViewById(R.id.textView3);
 
-			text1.setText("...");
-			text2.setText("...");
-			text3.setText("...");
+			text1.setText("");
+			text2.setText("");
+			text3.setText("");
+			
+			//setting up the wallpaper.
+			relativLayout = (RelativeLayout) findViewById(R.id.pager);
+			if(ParseUser.getCurrentUser().getString("wallpaper") != null) {
+				relativLayout.setBackgroundColor(Color.parseColor(ParseUser.getCurrentUser().getString("wallpaper")));		
+			} else {
+				relativLayout.setBackgroundColor(Color.parseColor("#ffffff"));		
+			}
+			
 			
 			Typeface tf = Typeface.createFromAsset(getAssets(),
 	                "fonts/GOTHICB.TTF");

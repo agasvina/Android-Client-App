@@ -207,8 +207,15 @@ public class SendStorqActivity extends Activity {
 		// send push notification
 		ParsePush push = new ParsePush();
 		push.setQuery(query);
-		push.setMessage(getString(R.string.push_message, 
-				ParseUser.getCurrentUser().getUsername()));
+		String location = "";
+		if(MainActivity.Location != null) {
+			location = MainActivity.Location;
+		} else {
+			location = ParseUser.getCurrentUser().getString("location");
+		}
+//		push.setMessage(getString(R.string.push_message, 
+//				ParseUser.getCurrentUser().getUsername()));
+		push.setMessage(getString(R.string.push_message) + location);
 		push.sendInBackground();
 	}
 }
