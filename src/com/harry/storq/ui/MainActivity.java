@@ -553,8 +553,7 @@ GestureDetector.OnDoubleTapListener
 	      try {
 	        float diff = e1.getX() - e2.getX();
 	        float diffY = e1.getY() - e2.getY();
-	        
-	        
+  
 	        // Left swipe
 	        if (diff > SWIPE_MIN_DISTANCE
 	        && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
