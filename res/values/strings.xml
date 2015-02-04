@@ -32,6 +32,8 @@
     <string name="error_selecting_file">There was an error with the file selected. Please select a different file.</string>
     <string name="error_file_too_large">The selected file is too large! Select a new file.</string>
     <string name="facebook_app_id">405243752968279</string>
+        <string name="forget_error_message">please make sure you enter correct email!</string>
+    <string name="forget_error_title">oops!</string>
 
     <string-array name="camera_choices">
         <item>Take Picture</item>
@@ -66,7 +68,7 @@
     <string name="content_desc_message_icon">Message icon</string>
     <string name="content_desc_user_avatar">User avatar</string>
     <string name="content_desc_user_checkmark">User checkmark</string>
-    <string name="push_message">new storq from  </string>
+    <string name="push_message">"new storq from "</string>
     <string name="title_activity_get">Send Us Feedback</string>
     <string name="title_activity_view_text">ViewTextActivity</string>
     <string name="title_activity_random">RandomActivity</string>
@@ -92,5 +94,10 @@
     <string name="bad_words_msg">message contains bad words.. unable to send</string>
     <string name="profanity_error">please remove profanity from message and resend</string>
     <string name="facebook_id">405243752968279</string>
+    <string name="title_activity_forget_password">ForgetPasswordActivity</string>
+    <string name="request_password">request password</string>
+    <string name="email_verify_01">"We've sent an email to your email."</string>
+    <string name="email_verfy_02">"Click the link in the email to reset your password. "</string>
+    <string name="forget_title_notif">Hi there!</string>
 
 </resources>

@@ -158,22 +158,13 @@ GestureDetector.OnDoubleTapListener
 		
 		storqText = (EditText) findViewById(R.id.editText);
 		storqText.setTypeface(tf);
-        
-	    Session session = ParseFacebookUtils.getSession();
-	    if (session != null && session.isOpened()) {
-	      makeMeRequest();
-	    }
-	    
+        buildGoogleApiClient();      
+
+
 	      mDetector = new GestureDetectorCompat(this,this);
-	        // Set the gesture detector as the double tap
-	        // listener.
-	        mDetector.setOnDoubleTapListener(this);
+	      mDetector.setOnDoubleTapListener(this);
 		
 	    
-		//get user from facebook...
-	    // Fetch Facebook user info if the session is active
-	    ParseAnalytics.trackAppOpened(getIntent());
-		
 		
 		ParseUser currentUser = ParseUser.getCurrentUser();
 		if (currentUser == null) {
@@ -185,25 +176,27 @@ GestureDetector.OnDoubleTapListener
 		} else {
 		}
 		
-		//setting up the wallpaper.
-		relativLayout = (RelativeLayout) findViewById(R.id.pager);
-		if(ParseUser.getCurrentUser().getString("wallpaper") != null) {
-			relativLayout.setBackgroundColor(Color.parseColor(ParseUser.getCurrentUser().getString("wallpaper")));		
-		} else {
-			relativLayout.setBackgroundColor(Color.parseColor("#ffffff"));		
+		if (ParseUser.getCurrentUser() != null) {
+
+			//setting up the wallpaper.
+			relativLayout = (RelativeLayout) findViewById(R.id.pager);
+			if(ParseUser.getCurrentUser().getString("wallpaper") != null) {
+				relativLayout.setBackgroundColor(Color.parseColor(ParseUser.getCurrentUser().getString("wallpaper")));		
+			} else {
+				relativLayout.setBackgroundColor(Color.parseColor("#ffffff"));		
+			}
+			
+	        if(Location == null) {
+	        	Location = ParseUser.getCurrentUser().getString("location");
+	        }
+			
+	        refresh();
+			
+			//Gesture Activity
+			gestureDetector = new GestureDetector(
+	                new SwipeGestureDetector());		
 		}
-		
-		//this is for the location
-        buildGoogleApiClient();      
-        if(Location == null) {
-        	Location = ParseUser.getCurrentUser().getString("location");
-        }
-		
-		refresh();
-		
-		//Gesture Activity
-		gestureDetector = new GestureDetector(
-                new SwipeGestureDetector());		
+	
 	} //End of OnCreate Method
 
 	
@@ -594,9 +587,8 @@ GestureDetector.OnDoubleTapListener
 	    @Override
 	    protected void onStart() {
 	        super.onStart();
-	        mGoogleApiClient.connect();
+	       mGoogleApiClient.connect();
 	    }
-
 	    @Override
 	    protected void onStop() {
 	        super.onStop();
@@ -620,6 +612,12 @@ GestureDetector.OnDoubleTapListener
 	        	MainActivity.Latitude = mLastLocation.getLatitude();
 	        	MainActivity.Longitude = mLastLocation.getLongitude();
 	            getLocation(Latitude, Longitude);
+	            //update the location
+	            if (MainActivity.Location != null) {
+	            	ParseUser.getCurrentUser().put("location", MainActivity.Location);
+	            	ParseUser.getCurrentUser().saveInBackground();
+	            	
+	            }
 	        }
 	        
 	        

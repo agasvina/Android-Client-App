@@ -30,7 +30,8 @@ public class LoginActivity extends Activity {
 
 	
 	protected TextView mSignUpTextView;
-
+	protected TextView mForgetPassword;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +46,15 @@ public class LoginActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+				startActivity(intent);
+			}
+		});
+		
+		mForgetPassword = (TextView) findViewById(R.id.forget);
+		mForgetPassword.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(LoginActivity.this, ForgetPasswordActivity.class);
 				startActivity(intent);
 			}
 		});

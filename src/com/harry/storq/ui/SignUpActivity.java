@@ -101,7 +101,7 @@ public class SignUpActivity extends FragmentActivity implements OnItemSelectedLi
 					newUser.setPassword(password);
 					newUser.setEmail(email);
 					newUser.put("gender", gender);
-					newUser.put("location", "Unknown");
+					newUser.put("location", "unknown");
 					newUser.put("wallpaper","#ffffff");
 					newUser.put("age",year+"");
 					newUser.signUpInBackground(new SignUpCallback() {

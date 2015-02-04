@@ -44,4 +44,15 @@
         <requestFocus />
     </EditText>
 
+    <TextView
+        android:id="@+id/forget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/signUpText"
+        android:layout_centerHorizontal="true"
+        android:text="forget password"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
 </RelativeLayout>
