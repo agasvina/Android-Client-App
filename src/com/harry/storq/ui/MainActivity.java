@@ -3,6 +3,7 @@ package com.harry.storq.ui;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,12 +36,10 @@ import android.view.Window;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.facebook.FacebookRequestError;
 import com.facebook.Request;
 import com.facebook.Response;
-import com.facebook.Session;
 import com.facebook.model.GraphUser;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -51,7 +50,6 @@ import com.harry.storq.R;
 import com.harry.storq.utils.ColorWheel;
 import com.harry.storq.utils.ParseConstants;
 import com.parse.FindCallback;
-import com.parse.ParseAnalytics;
 import com.parse.ParseException;
 import com.parse.ParseFacebookUtils;
 import com.parse.ParseObject;
@@ -95,6 +93,9 @@ GestureDetector.OnDoubleTapListener
 	//Show message automatically...
 	public static List<ParseObject> mMessages;
 	protected SwipeRefreshLayout mSwipeRefreshLayout;
+	
+	
+	protected Typeface tf;
 
 
     /**
@@ -113,10 +114,6 @@ GestureDetector.OnDoubleTapListener
 		@Override
 		public void onClick(DialogInterface dialog, int which) {
 			switch(which) {
-//				case 0: 
-//				    Intent intent = new Intent(MainActivity.this,FeedbackActivity.class);
-//				    startActivityForResult(intent,1);
-//					break;
 				case 0:
 					ParseUser.logOut();
 					navigateToLogin();				
@@ -153,7 +150,7 @@ GestureDetector.OnDoubleTapListener
 		actionBar.hide();
 
 
-		Typeface tf = Typeface.createFromAsset(getAssets(),
+		tf = Typeface.createFromAsset(getAssets(),
                 "fonts/GOTHICB.TTF");
 		
 		storqText = (EditText) findViewById(R.id.editText);
@@ -199,6 +196,13 @@ GestureDetector.OnDoubleTapListener
 	
 	} //End of OnCreate Method
 
+	@Override 
+	public void onRestart() {
+		super.onRestart();
+        buildGoogleApiClient();      
+		refresh();
+	}
+	
 	
 	@Override
 	public void onResume()
@@ -222,7 +226,11 @@ GestureDetector.OnDoubleTapListener
 					builder.setMessage(e.getMessage())
 						.setTitle(R.string.error_title)
 						.setPositiveButton(android.R.string.ok, null);
-					AlertDialog dialog = builder.create();
+					//AlertDialog dialog = builder.create();
+					AlertDialog dialog = builder.show();
+					TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+					messageText.setGravity(Gravity.CENTER);
+					messageText.setTypeface(tf);
 					dialog.show();
 				}
 			}
@@ -239,7 +247,7 @@ GestureDetector.OnDoubleTapListener
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		getMenuInflater().inflate(R.menu.main, menu);
+		//getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 	
@@ -255,8 +263,8 @@ GestureDetector.OnDoubleTapListener
 			case R.id.action_mail:
 				AlertDialog.Builder builder2 = new AlertDialog.Builder(this);
 				builder2.setItems(R.array.text_choices, mDialogListener);
-				AlertDialog dialog2 = builder2.create();
-				dialog2.show();
+				AlertDialog dialog = builder2.show();
+				dialog.show();
 		}
 		
 		return super.onOptionsItemSelected(item);
@@ -267,7 +275,7 @@ GestureDetector.OnDoubleTapListener
 	  private void getLocation(double latitude, double longitude) {      
 			String forecastUrl = "http://maps.googleapis.com/maps/api/geocode/json?latlng="
 								 +latitude+ ","
-								 + longitude +"&sensor=true&types=(cities)";
+								 +longitude +"&sensor=true&types=(cities)";
 
 	        if (isNetworkAvailable()) {
 
@@ -358,7 +366,10 @@ GestureDetector.OnDoubleTapListener
         	        					builder.setMessage(R.string.profanity_error)
         	        						.setTitle(R.string.error_title)
         	        						.setPositiveButton(android.R.string.ok, null);
-        	        					AlertDialog dialog = builder.create();
+        	        					AlertDialog dialog = builder.show();
+        	        					TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+        	        					messageText.setGravity(Gravity.CENTER);
+        	        					messageText.setTypeface(tf);
         	        					dialog.show();	                        	
         	                        }
      	                        }
@@ -492,8 +503,13 @@ GestureDetector.OnDoubleTapListener
 	  }
 
 	  private void onRightSwipe() {
-			Toast.makeText(MainActivity.this, R.string.searching_storq, Toast.LENGTH_SHORT).show();
-			refresh();
+		  //TODO update:
+		  	Random rand = new Random();
+		    int randomNum = rand.nextInt((7 - 0) + 1) + 0;
+		    relativLayout.setBackgroundColor(Color.parseColor(ColorWheel.mColors[randomNum]));
+			ParseUser.getCurrentUser().put("wallpaper", ColorWheel.mColors[randomNum]);
+			ParseUser.getCurrentUser().saveInBackground();
+					
 			
 	  }
 	  
@@ -616,7 +632,6 @@ GestureDetector.OnDoubleTapListener
 	            if (MainActivity.Location != null) {
 	            	ParseUser.getCurrentUser().put("location", MainActivity.Location);
 	            	ParseUser.getCurrentUser().saveInBackground();
-	            	
 	            }
 	        }
 	        
@@ -647,8 +662,8 @@ GestureDetector.OnDoubleTapListener
 	        public void run() { 
 				AlertDialog.Builder builder2 = new AlertDialog.Builder(MainActivity.this);
 				builder2.setItems(R.array.text_choices, mDialogListener);
-				AlertDialog dialog2 = builder2.create();
-				dialog2.show();
+				AlertDialog dialog = builder2.show();
+				dialog.show();
 				
 	        }   
 	    };

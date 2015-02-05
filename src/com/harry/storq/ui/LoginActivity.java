@@ -1,14 +1,12 @@
 package com.harry.storq.ui;
 
-import java.util.Arrays;
-import java.util.List;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -26,7 +24,9 @@ public class LoginActivity extends Activity {
 
 	protected EditText mUsername;
 	protected EditText mPassword;
+	protected TextView password;
 	protected Button mLoginButton;
+	protected Typeface tf;
 
 	
 	protected TextView mSignUpTextView;
@@ -60,10 +60,11 @@ public class LoginActivity extends Activity {
 		});
 		
 
-		Typeface tf = Typeface.createFromAsset(getAssets(),
+		tf = Typeface.createFromAsset(getAssets(),
                 "fonts/GOTHICB.TTF");
 		mSignUpTextView.setTypeface(tf);
-
+		password = (TextView) findViewById(R.id.forget);
+		password.setTypeface(tf);
 		
 		
 		mUsername = (EditText)findViewById(R.id.usernameField);
@@ -90,7 +91,11 @@ public class LoginActivity extends Activity {
 					builder.setMessage(R.string.login_error_message)
 						.setTitle(R.string.login_error_title)
 						.setPositiveButton(android.R.string.ok, null);
-					AlertDialog dialog = builder.create();
+					//AlertDialog dialog = builder.create();
+					AlertDialog dialog = builder.show();
+					TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+					messageText.setGravity(Gravity.CENTER);
+					messageText.setTypeface(tf);
 					dialog.show();
 				}
 				else {
@@ -113,7 +118,10 @@ public class LoginActivity extends Activity {
 								builder.setMessage(e.getMessage())
 									.setTitle(R.string.login_error_title)
 									.setPositiveButton(android.R.string.ok, null);
-								AlertDialog dialog = builder.create();
+								AlertDialog dialog = builder.show();
+								TextView messageText = (TextView)dialog.findViewById(android.R.id.message);
+								messageText.setGravity(Gravity.CENTER);
+								messageText.setTypeface(tf);
 								dialog.show();
 							}
 						}

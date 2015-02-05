@@ -73,7 +73,7 @@
     <style name="AuthEditText" parent="android:Widget.Holo.Light.EditText">
         <item name="android:ems">10</item>
         <item name="android:textColorHint">@color/light_gray</item>
-        <item name="android:textSize">17sp</item>        
+        <item name="android:textSize">20sp</item>        
         <item name="android:layout_width">match_parent</item>  
         <item name="android:layout_height">wrap_content</item>  
     </style>
@@ -82,7 +82,7 @@
         <item name="android:layout_marginLeft">@dimen/activity_horizontal_margin</item>
         <item name="android:layout_marginRight">@dimen/activity_horizontal_margin</item>
         <item name="android:textColor">@color/text_color</item>
-        <item name="android:textSize">13sp</item>
+        <item name="android:textSize">17sp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
@@ -98,7 +98,7 @@
     
         <style name="AuthSpinner" parent="android:Widget.Holo.Spinner">
         <item name="android:textColorHint">@color/light_gray</item>            
-        <item name="android:textSize">17sp</item>        
+        <item name="android:textSize">20sp</item>        
         <item name="android:layout_width">match_parent</item>  
         <item name="android:layout_height">wrap_content</item>  
     </style>

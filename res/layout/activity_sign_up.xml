@@ -32,16 +32,23 @@
             <requestFocus />
         </EditText>
 
-        <TextView
-            android:id="@+id/textView1"
-            android:paddingLeft="@dimen/activity_horizontal_margin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="Select gender"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+        <EditText
+            android:id="@+id/emailField"
+            style="@style/AuthEditText"
+            android:ems="10"
             android:gravity="center"
-              />
+            android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            android:textColor="@android:color/black" />
+
+        <EditText
+            android:id="@+id/passwordField"
+            style="@style/AuthEditText"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="@string/password_hint"
+            android:inputType="textPassword"
+            android:textColor="@android:color/black" />
 
         <Spinner
             android:id="@+id/spinner"
@@ -61,22 +68,6 @@
             android:layout_height="wrap_content"
             android:text="select birthdate"
             android:onClick="showDatePickerDialog" />
-
-        <EditText
-            android:id="@+id/passwordField"
-            style="@style/AuthEditText"
-            android:hint="@string/password_hint"
-            android:inputType="textPassword"
-            android:textColor="@android:color/black" 
-            android:gravity="center"/>
-
-        <EditText
-            android:id="@+id/emailField"
-            style="@style/AuthEditText"
-            android:hint="@string/email_hint"
-            android:inputType="textEmailAddress"
-            android:textColor="@android:color/black"
-            android:gravity="center" />
     </LinearLayout>
 
     <Button

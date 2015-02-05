@@ -845,8 +845,8 @@ containing a value of this type.
         public static final int editText=0x7f07002a;
         public static final int editTextLayout=0x7f070033;
         public static final int email=0x7f070022;
-        public static final int emailField=0x7f070037;
-        public static final int forget=0x7f070030;
+        public static final int emailField=0x7f070035;
+        public static final int forget=0x7f07002f;
         public static final int getTextButton=0x7f07002b;
         public static final int grayscale=0x7f070015;
         public static final int holo_dark=0x7f070007;
@@ -872,13 +872,13 @@ containing a value of this type.
         public static final int sandbox=0x7f07000a;
         public static final int satellite=0x7f070004;
         public static final int selectDate=0x7f070039;
-        public static final int selectDateButton=0x7f070036;
+        public static final int selectDateButton=0x7f070037;
         public static final int selectionDetails=0x7f07000d;
         public static final int senderLabel=0x7f070055;
         public static final int signUpText=0x7f07002c;
         public static final int signupButton=0x7f070038;
         public static final int small=0x7f070017;
-        public static final int spinner=0x7f070035;
+        public static final int spinner=0x7f070036;
         public static final int standard=0x7f070019;
         public static final int strict_sandbox=0x7f07000b;
         public static final int subtitle=0x7f070032;
@@ -891,7 +891,7 @@ containing a value of this type.
         public static final int title=0x7f070031;
         public static final int top=0x7f07001e;
         public static final int userImageView=0x7f070057;
-        public static final int usernameField=0x7f07002f;
+        public static final int usernameField=0x7f070030;
         public static final int wrap_content=0x7f07000f;
     }
     public static final class integer {
